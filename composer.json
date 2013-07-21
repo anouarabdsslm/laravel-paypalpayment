@@ -1,0 +1,27 @@
+{
+    "name": "anouar/paypalpayment",
+    "description": "",
+    "authors": [
+        {
+            "name": "Anouar Abdessalam",
+            "email": "dtekind@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/support": "4.0.x",
+        "php": ">=5.3.0",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "paypal/rest-api-sdk-php" : "0.5.*"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations"
+        ],
+        "psr-0": {
+            "Anouar\\Paypalpayment": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
