@@ -12,7 +12,7 @@ Install this package through Composer. To your `composer.json` file, add:
 }
 ```
 
-Next, run `composer install --dev` or `composer update` to download it.
+Next, run `composer install --dev` to download it.
 
 Add the service provider to `app/config/app.php`, within the `providers` array.
 
