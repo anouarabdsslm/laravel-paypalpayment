@@ -85,8 +85,8 @@ class HomeController extends BaseController {
 		$card->setExpire_month("11");
 		$card->setExpire_year("2019");
 		$card->setCvv2("012");
-		$card->setFirst_name("Hamid");
-		$card->setLast_name("Nahli");
+		$card->setFirst_name("Anouar");
+		$card->setLast_name("Abdessalam");
 		$card->setBilling_address($addr);
 
 		// ### FundingInstrument
