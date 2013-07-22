@@ -35,7 +35,7 @@ Finally, add the alias to `app/config/app.php`, within the `aliases` array.
 ```
 Now go to `vendor\anouar\paypalpayment\src\Anouar\Paypalpayment\sdk_config.ini`
 
-Set your paypal `acct1.ClientId` and `acct1.ClientSecret` , set the `service.EndPoint` to the mode that you want , by default it set to testing mode which is`service.EndPoint="https://api.sandbox.paypal.com"`.If you were going  live , make sure to comment the sandbox mode nd uncomment the live mode
+Set your paypal `acct1.ClientId` and `acct1.ClientSecret` , set the `service.EndPoint` to the mode that you want , by default it set to testing mode which is`service.EndPoint="https://api.sandbox.paypal.com"`.If you were going  live , make sure to comment the sandbox mode and uncomment the live mode
 That's it !!!!!
 ==============
 
