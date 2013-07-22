@@ -1,6 +1,6 @@
 {
     "name": "anouar/paypalpayment",
-    "description": "",
+    "description": "Laravel4 paypal payment package , help you process credit card payment using paypal api",
     "authors": [
         {
             "name": "Anouar Abdessalam",
