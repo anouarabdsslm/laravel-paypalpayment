@@ -152,7 +152,6 @@ class HomeController extends BaseController {
 		$response=$payment->toArray();
 		echo"<pre>";
 		print_r($response);
-		//return View::make('home.index',compact('response'));
 		//var_dump($payment->getId());
 
 		//print_r($payment->toArray());
