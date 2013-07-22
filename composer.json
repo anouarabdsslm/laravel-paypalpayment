@@ -16,9 +16,6 @@
         "paypal/rest-api-sdk-php" : "0.5.*"
     },
     "autoload": {
-        "classmap": [
-            "src/"
-        ],
         "psr-0": {
             "Anouar\\Paypalpayment": "src/"
         }
