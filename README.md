@@ -66,7 +66,7 @@ class HomeController extends BaseController {
          OAuthTokenCredential($ClientId,$ClientSecret)
          Commerce identity solution that enables your customers to sign in to your web site quickly and securely using their PayPal login credentials.
         */
-         /*Sample code:
+        /*Sample code:
         $oauthCredential	= Paypalpayment::OAuthTokenCredential('AVJx0RArQzkCCsWC0evZi1SsoO4gxjDkkULQBdmPNBZT4fc14AROUq-etMEY','EH5F0BAxqonVnP8M4a0c6ezUHq-UT-CWfGciPNQOdUlTpWPkNyuS6eDN-tpA');
 		$accessToken     	= $oauthCredential->getAccessToken();
         print_r($accessToken);
@@ -74,7 +74,7 @@ class HomeController extends BaseController {
         exit();*/
 
 
-        //grap the credentials . be sute to set your acct1.ClientId and acct1.ClientSecret on sdk_config.ini
+        //grap your credentials .Be sure to set your acct1.ClientId and acct1.ClientSecret on sdk_config.ini
         $cred = Paypalpayment::OAuthTokenCredential();
         print_r($cred);
 
