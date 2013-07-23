@@ -13,25 +13,30 @@ use PayPal\Auth\OAuthTokenCredential;
 
 class PaypalPayment{
 	
-	private  $cred;
-	//Uiulities fucntions
-	public static function bootstarp() {
+	//Utilities fucntions
+	public static function OAuthTokenCredential($ClientId=null,$ClientSecret=null) {
 
 		define("PP_CONFIG_PATH", __DIR__);
 
+		if(isset($ClientId) && isset($ClientSecret)){
+
+			return new OAuthTokenCredential($ClientId,$ClientSecret);
+
+		}
+
 		$configManager 	= \PPConfigManager::getInstance();
-		// $cred is used by samples that include this bootstrap file
-		// This piece of code simply demonstrates how you can
-		// dynamically pass in a client id/secret instead of using
-		// the config file. If you do not need a way to pass
-		// in credentials dynamically, you can skip the
-		// <Resource>::setCredential($cred) calls that
-		// you see in the samples.
-   	 	
-   	 	 $cred =new OAuthTokenCredential(
-				$configManager->get('acct1.ClientId'),
-				$configManager->get('acct1.ClientSecret'));
-   	 	 return $cred;
+			// $cred is used by samples that include this bootstrap file
+			// This piece of code simply demonstrates how you can
+			// dynamically pass in a client id/secret instead of using
+			// the config file. If you do not need a way to pass
+			// in credentials dynamically, you can skip the
+			// <Resource>::setCredential($cred) calls that
+			// you see in the samples.
+	   	 	
+	   	 $cred =new OAuthTokenCredential(
+					$configManager->get('acct1.ClientId'),
+					$configManager->get('acct1.ClientSecret'));
+	   	 return $cred;
 		
 	}
  
