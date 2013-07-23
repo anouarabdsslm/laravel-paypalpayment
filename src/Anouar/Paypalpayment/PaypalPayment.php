@@ -8,6 +8,7 @@ use PayPal\Api\Payment;
 use PayPal\Api\FundingInstrument;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
+use PayPal\Api\PaymentExecution;
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
 
@@ -95,12 +96,21 @@ class PaypalPayment{
   		return new Payment();
   	}
 
+  	public static function getPayment($paymentId){
+  		return Payment::get($paymentId);
+  	}
+
+
   	public static function ApiContext($credential, $requestId=null){
   		return new ApiContext($credential, $requestId);
   	}
 
   	public static function RedirectUrls(){
   		return new RedirectUrls();
+  	}
+
+  	public static function PaymentExecution(){
+  		return new PaymentExecution();
   	}
 
 }
