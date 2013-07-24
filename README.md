@@ -1,7 +1,7 @@
 laravel-paypalpayment
 =====================
 
-laravel-paypalpayment is simple package  help you process credit card payment with your L4 projects using paypal API.
+laravel-paypalpayment is simple package  help you process credit card payment and other paypal payment methods with your L4 projects using paypal REST API SDK.
 Installation
 =============
 Install this package through Composer. To your `composer.json` file, add:
@@ -35,7 +35,8 @@ Finally, add the alias to `app/config/app.php`, within the `aliases` array.
 ```
 Now go to `vendor\anouar\paypalpayment\src\Anouar\Paypalpayment\sdk_config.ini`
 
-Set your paypal `acct1.ClientId` and `acct1.ClientSecret` , set the `service.EndPoint` to the mode that you want , by default it set to testing mode which is`service.EndPoint="https://api.sandbox.paypal.com"`.If you were going  live , make sure to comment the sandbox mode and uncomment the live mode
+Set your SDK configuration `acct1.ClientId` and `acct1.ClientSecret` , set the `service.EndPoint` to the mode that you want , by default it set to testing mode which is`service.EndPoint="https://api.sandbox.paypal.com"`.If you were going  live , make sure to comment the sandbox mode and uncomment the live mode
+.If you do not want to use an ini file or want to pick your configuration dynamically, you can use the `$apiContext->setConfig()` method to pass in the configuration.
 That's it !!!!!
 ==============
 
@@ -175,6 +176,7 @@ class HomeController extends BaseController {
 
 }
 ```
+These examples pick the SDK configuration from the sdk_config.ini file.
 Conclusion
 ==========
 I hope this package help somone around -_*
