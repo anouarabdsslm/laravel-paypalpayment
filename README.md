@@ -1,7 +1,7 @@
 laravel-paypalpayment
 =====================
 
-laravel-paypalpayment is simple package  help you process credit card payment and other paypal payment methods with your L4 projects using paypal REST API SDK.
+laravel-paypalpayment is simple package  help you process   direct credit card payments, stored credit card payments and PayPal account payments with your L4 projects using paypal REST API SDK.
 Installation
 =============
 Install this package through Composer. To your `composer.json` file, add:
