@@ -42,7 +42,7 @@ That's it !!!!!
 
 Example Code
 ============
-Create new controller `PaypalPaymentController` and past the following code :
+Create new controller `PaypalPaymentController` and paste the following code :
 ```php
 class PaypalPaymentController extends BaseController {
 
