@@ -42,42 +42,31 @@ That's it !!!!!
 
 Example Code
 ============
-Go to your home controller and past the following code  . make sure to confugure the routes like so `Route::get('/','HomeController@index');`
+Create new controller `PaypalPaymentController` and past the following code :
 ```php
-class HomeController extends BaseController {
+class PaypalPaymentController extends BaseController {
 
-    /*
-    |--------------------------------------------------------------------------
-    | Default Home Controller
-    |--------------------------------------------------------------------------
-    |
-    | You may wish to use controllers instead of, or in addition to, Closure
-    | based routes. That's great! Here is an example controller method to
-    | get you started. To route to this controller, just add the route:
-    |
-    |   Route::get('/', 'HomeController@showWelcome');
-    |
+     /*
+        Use this call to get a list of payments. 
     */
-    //protected $layout="master";
-
     public function index(){
+    	//grape  the OAuthTokenCredential
+    	Paypalpayment::OAuthTokenCredential();
 
-        echo "<pre>";
-        /*Use the OAuth request to retrieve an access token for use with your payments calls.
-         OAuthTokenCredential($ClientId,$ClientSecret)
-         Commerce identity solution that enables your customers to sign in to your web site quickly and securely using their PayPal login credentials.
+    	echo "<pre>";
+    	
+        $payments = Paypalpayment::geAllPayment(array('count' => 2, 'start_index' => 0));
+
+        print_r($payments);
+    }
+
+    public function create(){
+
+        /*
+        	grap your credentials .Be sure to set your acct1.ClientId and acct1.ClientSecret on sdk_config.ini
         */
-        /*Sample code:
-        $oauthCredential	= Paypalpayment::OAuthTokenCredential('AVJx0RArQzkCCsWC0evZi1SsoO4gxjDkkULQBdmPNBZT4fc14AROUq-etMEY','EH5F0BAxqonVnP8M4a0c6ezUHq-UT-CWfGciPNQOdUlTpWPkNyuS6eDN-tpA');
-		$accessToken     	= $oauthCredential->getAccessToken();
-        print_r($accessToken);
-
-        exit();*/
-
-
-        //grap your credentials .Be sure to set your acct1.ClientId and acct1.ClientSecret on sdk_config.ini
-        $cred = Paypalpayment::OAuthTokenCredential();
-        print_r($cred);
+        
+        //$cred = Paypalpayment::OAuthTokenCredential();
 
 
         // ### Address
@@ -166,17 +155,36 @@ class HomeController extends BaseController {
         }
 
         $response=$payment->toArray();
+
         echo"<pre>";
         print_r($response);
+       
         //var_dump($payment->getId());
 
         //print_r($payment->toArray());
+    }
 
+    /*
+        Use this call to get details about payments that have not completed, 
+        such as payments that are created and approved, or if a payment has failed.
+    */
+
+    public function show($payment_id){
+
+       Paypalpayment::OAuthTokenCredential();
+
+       $payment = Paypalpayment::getPayment($payment_id);
+
+       echo "<pre>";
+
+       print_r($payment);
     }
 
 }
 ```
+Go to your `routes.php` file  and register a resourceful route to the controller:` Route::resource('payment', 'PaypalPaymentController');`
+
 These examples pick the SDK configuration from the sdk_config.ini file.
 Conclusion
 ==========
-I hope this package help somone around -_*
+I hope this package help someone around -_*
