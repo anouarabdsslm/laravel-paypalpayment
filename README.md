@@ -66,7 +66,7 @@ class PaypalPaymentController extends BaseController {
         	grap your credentials .Be sure to set your acct1.ClientId and acct1.ClientSecret on sdk_config.ini
         */
         
-        //$cred = Paypalpayment::OAuthTokenCredential();
+        $cred = Paypalpayment::OAuthTokenCredential();
 
 
         // ### Address
