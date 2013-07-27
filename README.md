@@ -44,30 +44,63 @@ Example Code
 ============
 Create new controller `PaypalPaymentController` and paste the following code :
 ```php
-class PaypalPaymentController extends BaseController {
+
+class PaymentController extends BaseController {
+    //
+    private $_apiContext;
+
+    /*
+     *   These construct set the SDK configuration dynamiclly, 
+     *   If you want to pick your configuration from the sdk_config.ini file
+     *   make sure to update you configuration there :
+     *   $this->_cred= Paypalpayment::OAuthTokenCredential();
+    */
+	public function __construct(){
+
+        // ### Api Context
+        // Pass in a `ApiContext` object to authenticate 
+        // the call. You can also send a unique request id 
+        // (that ensures idempotency). The SDK generates
+        // a request id if you do not pass one explicitly. 
+        //OAuthTokenCredential($clientId, $clientSecret)
+
+        $this->_apiContext = Paypalpayment:: ApiContext(Paypalpayment::OAuthTokenCredential(
+                'AVJx0RArQzkCCsWC0evZi1SsoO4gxjDkkULQBdmPNBZT4fc14AROUq-etMEY',
+                'EH5F0BAxqonVnP8M4a0c6ezUHq-UT-CWfGciPNQOdUlTpWPkNyuS6eDN-tpA'));
+        // Uncomment this step if you want to use per request 
+        // dynamic configuration instead of using sdk_config.ini
+
+        $this->_apiContext->setConfig(array(
+            'mode' => 'sandbox',
+            'http.ConnectionTimeOut' => 30,
+            'log.LogEnabled' => true,
+            'log.FileName' => '../PayPal.log',
+            'log.LogLevel' => 'FINE'
+        ));
+
+
+	}
+
+
 
      /*
         Use this call to get a list of payments. 
+        url:payment/
     */
     public function index(){
-    	//grape  the OAuthTokenCredential
-    	Paypalpayment::OAuthTokenCredential();
 
-    	echo "<pre>";
-    	
-        $payments = Paypalpayment::geAllPayment(array('count' => 2, 'start_index' => 0));
+        echo "<pre>";
 
-        print_r($payments);
+        $payments = Paypalpayment::all(array('count' => 1, 'start_index' => 0),$this->_apiContext);
+
+         print_r($payments);
     }
 
+    /*
+     * Create payment using credit card
+     * url:payment/create
+    */
     public function create(){
-
-        /*
-        	grap your credentials .Be sure to set your acct1.ClientId and acct1.ClientSecret on sdk_config.ini
-        */
-        
-        $cred = Paypalpayment::OAuthTokenCredential();
-
 
         // ### Address
         // Base Address object used as shipping or billing
@@ -116,7 +149,7 @@ class PaypalPaymentController extends BaseController {
         // Let's you specify a payment amount.
         $amount = Paypalpayment:: Amount();
         $amount->setCurrency("USD");
-        $amount->setTotal("10.00");
+        $amount->setTotal("1.00");
 
         // ### Transaction
         // A transaction defines the contract of a
@@ -135,19 +168,12 @@ class PaypalPaymentController extends BaseController {
         $payment->setPayer($payer);
         $payment->setTransactions(array($transaction));
 
-        // ### Api Context
-        // Pass in a `ApiContext` object to authenticate 
-        // the call and to send a unique request id 
-        // (that ensures idempotency). The SDK generates
-        // a request id if you do not pass one explicitly. 
-        $apiContext = Paypalpayment:: ApiContext($cred, 'Request' . time());
-
         // ### Create Payment
         // Create a payment by posting to the APIService
         // using a valid ApiContext
         // The return object contains the status;
         try {
-            $payment->create($apiContext);
+            $payment->create($this->_apiContext);
         } catch (\PPConnectionException $ex) {
             return "Exception: " . $ex->getMessage() . PHP_EOL;
             var_dump($ex->getData());
@@ -167,24 +193,24 @@ class PaypalPaymentController extends BaseController {
     /*
         Use this call to get details about payments that have not completed, 
         such as payments that are created and approved, or if a payment has failed.
+        url:payment/PAY-3B7201824D767003LKHZSVOA
     */
 
     public function show($payment_id){
 
-       Paypalpayment::OAuthTokenCredential();
-
-       $payment = Paypalpayment::getPayment($payment_id);
+       $payment = Paypalpayment::get($payment_id,$this->_apiContext);
 
        echo "<pre>";
 
        print_r($payment);
     }
+     
 
 }
 ```
 Go to your `routes.php` file  and register a resourceful route to the controller:` Route::resource('payment', 'PaypalPaymentController');`
 
-These examples pick the SDK configuration from the sdk_config.ini file.
+These examples pick the SDK configuration dynamiccly.If you want to pick your configuration from the sdk_config.ini file make sure to set thus configuration there. 
 Conclusion
 ==========
 I hope this package help someone around -_*
