@@ -192,11 +192,20 @@ class PaypalPayment{
 		return dirname($protocol . '://' . $host . ($port == $protocol_port ? '' : ':' . $port) . $request);
 	}
 
-	//grap payment details using the paymentId
-	public static function getPayment($paymentId){
+	//grape payment details using the paymentId
+	public static function get($paymentId, $apiContext = null){
+     if (isset($apiContext)) {
+       return Payment::get($paymentId, $apiContext);
+     }
   		return Payment::get($paymentId);
-  	}
+  }
 
-
+  ////grape all payment details
+  public static function all($param,$apiContext = null){
+      if (isset($apiContext)) {
+       return Payment::all($param, $apiContext);
+     }
+      return Payment::all($param);
+  }
 
 }
