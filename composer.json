@@ -13,7 +13,7 @@
         "php": ">=5.3.0",
         "ext-curl": "*",
         "ext-json": "*",
-        "paypal/rest-api-sdk-php": "v0.7.0"
+        "paypal/rest-api-sdk-php" : "0.5.*"
     },
     "autoload": {
         "psr-0": {
