@@ -46,13 +46,25 @@ Create new controller `PaypalPaymentController` and paste the following code :
 ```php
 
 class PaymentController extends BaseController {
-    //
+    /**
+     * object to authenticate the call.
+     * @param object $_apiContext
+     */
     private $_apiContext;
+
+    /**
+     * Set the ClientId and the ClientSecret.
+     * @param 
+     *string $_ClientId
+     *string $_ClientSecret
+     */
+    private $_ClientId='AVJx0RArQzkCCsWC0evZi1SsoO4gxjDkkULQBdmPNBZT4fc14AROUq-etMEY';
+    private $_ClientSecret='EH5F0BAxqonVnP8M4a0c6ezUHq-UT-CWfGciPNQOdUlTpWPkNyuS6eDN-tpA';
 
     /*
      *   These construct set the SDK configuration dynamiclly, 
      *   If you want to pick your configuration from the sdk_config.ini file
-     *   make sure to update you configuration there :
+     *   make sure to update you configuration there then grape the credentials using this code :
      *   $this->_cred= Paypalpayment::OAuthTokenCredential();
     */
 	public function __construct(){
@@ -62,22 +74,24 @@ class PaymentController extends BaseController {
         // the call. You can also send a unique request id 
         // (that ensures idempotency). The SDK generates
         // a request id if you do not pass one explicitly. 
-        //OAuthTokenCredential($clientId, $clientSecret)
+        
 
-        $this->_apiContext = Paypalpayment:: ApiContext(Paypalpayment::OAuthTokenCredential(
-                'AVJx0RArQzkCCsWC0evZi1SsoO4gxjDkkULQBdmPNBZT4fc14AROUq-etMEY',
-                'EH5F0BAxqonVnP8M4a0c6ezUHq-UT-CWfGciPNQOdUlTpWPkNyuS6eDN-tpA'));
-        // Uncomment this step if you want to use per request 
+        $this->_apiContext = Paypalpayment:: ApiContext(
+                Paypalpayment::OAuthTokenCredential(
+                    $this->_ClientId,
+                    $this->_ClientSecret
+                )
+        );
+
         // dynamic configuration instead of using sdk_config.ini
 
         $this->_apiContext->setConfig(array(
             'mode' => 'sandbox',
             'http.ConnectionTimeOut' => 30,
             'log.LogEnabled' => true,
-            'log.FileName' => '../PayPal.log',
+            'log.FileName' => __DIR__.'/../PayPal.log',
             'log.LogLevel' => 'FINE'
         ));
-
 
 	}
 
