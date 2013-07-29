@@ -136,7 +136,7 @@ That's it !!!!!
 Example Code
 ============
 
-##Initiate The Configuration
+##1-Initiate The Configuration
 Create new controller `PaypalPaymentController` and initiate the configuration :
 ```php
 
@@ -309,7 +309,7 @@ Add the `index()` function to the `PaypalPaymentController` Controller
     }
 ```
 
-##3-Get Payment details
+##4-Get Payment details
 Add the `show()` function to the `PaypalPaymentController` Controller 
 ```php
     /*
@@ -328,7 +328,7 @@ Add the `show()` function to the `PaypalPaymentController` Controller
     }
 ```
 
-##4-Execute Payment
+##5-Execute Payment
 Only for Payment with `payment_method` as `"paypal"`
 ```php
        // Get the payment Object by passing paymentId
