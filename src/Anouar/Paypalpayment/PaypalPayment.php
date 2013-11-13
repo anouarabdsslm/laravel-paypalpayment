@@ -178,7 +178,7 @@ class PaypalPayment{
 	 */
 	public static function getBaseUrl() {
 
-		return URL:to('/');
+		return URL::to('/');
 	}
 
 	//grape payment details using the paymentId
