@@ -1,6 +1,7 @@
 {
     "name": "anouar/paypalpayment",
     "description": "laravel-paypalpayment is simple package help you process direct credit card payments, stored credit card payments and PayPal account payments with your L4 projects using paypal REST API SDK.",
+    "license": "BSD-2-Clause",
     "authors": [
         {
             "name": "Anouar Abdessalam",
