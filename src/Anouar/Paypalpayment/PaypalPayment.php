@@ -2,7 +2,7 @@
 
 use PayPal\Api\Address;
 use PayPal\Api\Amount;
-use PayPal\Api\AmountDetails;
+use PayPal\Api\Details;
 use PayPal\Api\Authorization;
 use PayPal\Api\Capture;
 use PayPal\Api\CreditCard;
@@ -44,7 +44,7 @@ class PaypalPayment{
 
     public static function AmountDetails()
     {
-        return new AmountDetails();
+        return new Details();
     }
 
     public static function Authorization()
