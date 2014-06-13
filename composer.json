@@ -10,8 +10,7 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "illuminate/support": "4.1.x",
-        "php": ">=5.3.0",
+        "illuminate/support": "4.2.x",
         "ext-curl": "*",
         "ext-json": "*",
         "paypal/rest-api-sdk-php": "v0.7.0"
