@@ -351,9 +351,80 @@ Only for Payment with `payment_method` as `"paypal"`
     //Execute the payment
     $payment->execute($execution,$this->_apiContext);
 ```
+
 Go to your `routes.php` file  and register a resourceful route to the controller:` Route::resource('payment', 'PaypalPaymentController');`
 
 These examples pick the SDK configuration dynamiccly.If you want to pick your configuration from the sdk_config.ini file make sure to set thus configuration there. 
+
+#Set Return url and Cancel url
+if you're intereted to have return url and cancel ur set within you're app you can do it as bellow:
+within create method:
+```    
+public function create()
+    {
+            $payer = Paypalpayment::Payer();
+            $payer->setPayment_method("paypal");
+
+            $amount = Paypalpayment:: Amount();
+            $amount->setCurrency("USD");
+            $amount->setTotal("1.00");
+
+            $transaction = Paypalpayment:: Transaction();
+            $transaction->setAmount($amount);
+            $transaction->setDescription("This is the payment description.");
+
+            $baseUrl = Request::root();
+            $redirectUrls = Paypalpayment:: RedirectUrls();
+            $redirectUrls->setReturn_url($baseUrl.'/payment/confirmpayment');
+            $redirectUrls->setCancel_url($baseUrl.'/payment/cancelpayment');
+
+            $payment = Paypalpayment:: Payment();
+            $payment->setIntent("sale");
+            $payment->setPayer($payer);
+            $payment->setRedirectUrls($redirectUrls);
+            $payment->setTransactions(array($transaction));
+            
+            $response = $payment->create($this->_apiContext);
+
+            //set the trasaction id , make sure $_paymentId var is set within your class
+            $this->_paymentId = $response->id;
+
+            //dump the repose data when create the payment
+            $redirectUrl = $response->links[1]->href;
+            
+            //this is will take you to complete your payment on paypal
+            //when you confirm your payment it will redirect you back to the rturned url set above
+            //inmycase sitename/payment/confirmpayment this will execute the getConfirmpayment function bellow
+            //the return url will content a PayerID var
+            return Redirect::to( $redirectUrl );
+    }
+```
+
+if the user confirm the payment it will be redirect to our confirmation page within payerId variable  and this link will run the function bellow that will execute our payment
+```
+    public function getConfirmpayment()
+    {
+        $payer_id = Input::get('PayerID');
+
+        $payment = Paypalpayment::get($this->_paymentId, $this->_apiContext)
+
+        $paymentExecution = Paypalpayment::PaymentExecution();
+
+        $paymentExecution->setPayer_id( $payer_id );
+
+        $executePayment = $payment->execute($paymentExecution, $this->_apiContext);
+
+        //check your response and whatever you want with the response
+        //....
+    }
+```
+This is will be executed if the user hit cancel .
+```
+    public function getCancelpayment()
+    {
+        return 'Display the view that you want to show if  user cancel';
+    }
+```
 Conclusion
 ==========
 I hope this package help someone around -_*
