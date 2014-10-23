@@ -13,7 +13,7 @@
         "illuminate/support": "~4.0",
         "ext-curl": "*",
         "ext-json": "*",
-        "paypal/rest-api-sdk-php": "v0.7.0"
+        "paypal/rest-api-sdk-php": "v0.13.2"
     },
     "autoload": {
         "psr-0": {
