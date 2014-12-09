@@ -1,6 +1,30 @@
 <?php namespace Anouar\Paypalpayment;
 
 use Illuminate\Support\ServiceProvider;
+use PayPal\Api\Address;
+use PayPal\Api\Amount;
+use PayPal\Api\Authorization;
+use PayPal\Api\Capture;
+use PayPal\Api\CreditCard;
+use PayPal\Api\CreditCardToken;
+use PayPal\Api\Details;
+use PayPal\Api\FundingInstrument;
+use PayPal\Api\Item;
+use PayPal\Api\ItemList;
+use PayPal\Api\Links;
+use PayPal\Api\Payee;
+use PayPal\Api\Payer;
+use PayPal\Api\PayerInfo;
+use PayPal\Api\Payment;
+use PayPal\Api\PaymentExecution;
+use PayPal\Api\PaymentHistory;
+use PayPal\Api\RedirectUrls;
+use PayPal\Api\Refund;
+use PayPal\Api\RelatedResources;
+use PayPal\Api\Sale;
+use PayPal\Api\ShippingAddress;
+use PayPal\Api\Transaction;
+use PayPal\Api\Transactions;
 
 class PaypalpaymentServiceProvider extends ServiceProvider {
 
@@ -30,7 +54,11 @@ class PaypalpaymentServiceProvider extends ServiceProvider {
     {
         $this->app['paypalpayment'] = $this->app->share(function($app)
         {
-            return new PaypalPayment;
+            return new PaypalPayment(new Address , new Amount , new Details , new Authorization , new Capture,
+                new CreditCard , new CreditCardToken , new FundingInstrument, new Item , new ItemList , new Links ,
+                new Payee, new Payer, new PayerInfo, new Payment, new PaymentExecution, new PaymentHistory, new RedirectUrls,
+                new Refund, new RelatedResources, new Sale, new ShippingAddress, new Transactions, new Transaction
+            );
         });
     }
 

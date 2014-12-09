@@ -1,0 +1,3 @@
+suites:
+    acme_suite:
+        namespace: Anouar\Paypalpayment

@@ -1,5 +1,6 @@
 <?php namespace Anouar\Paypalpayment;
 
+use Illuminate\Support\Facades\URL;
 use PayPal\Api\Address;
 use PayPal\Api\Amount;
 use PayPal\Api\Details;
@@ -10,7 +11,7 @@ use PayPal\Api\CreditCardToken;
 use PayPal\Api\FundingInstrument;
 use PayPal\Api\Item;
 use PayPal\Api\ItemList;
-use PayPal\Api\Link;
+use PayPal\Api\Links;
 use PayPal\Api\Payee;
 use PayPal\Api\Payer;
 use PayPal\Api\PayerInfo;
@@ -19,158 +20,394 @@ use PayPal\Api\PaymentExecution;
 use PayPal\Api\PaymentHistory;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\Refund;
-use PayPal\Api\Resource;
+use PayPal\Api\RelatedResources;
 use PayPal\Api\Sale;
 use PayPal\Api\ShippingAddress;
-use PayPal\Api\SubTransaction;
 use PayPal\Api\Transaction;
+use PayPal\Api\Transactions;
+use PayPal\Core\PPConfigManager;
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
 
 class PaypalPayment{
-  
 
-    // Class functions
+    /**
+     * @var Paypal\Api\Address
+     */
+    private $address;
+    /**
+     * @var Paypal\Api\Amount
+     */
+    private $amount;
+    /**
+     * @var Paypal\Api\Details
+     */
+    private $details;
+    /**
+     * @var Paypal\Api\Authorization
+     */
+    private $authorization;
+    /**
+     * @var Paypal\Api\Capture
+     */
+    private $capture;
+    /**
+     * @var Paypal\Api\CreditCard
+     */
+    private $creditCard;
+    /**
+     * @var Paypal\Api\CreditCardToken
+     */
+    private $creditCardToken;
+    /**
+     * @var Paypal\Api\FundingInstrument
+     */
+    private $fundingInstrument;
+    /**
+     * @var Paypal\Api\Item
+     */
+    private $item;
+    /**
+     * @var Paypal\Api\ItemList
+     */
+    private $itemList;
+    /**
+     * @var Paypal\Api\Links
+     */
+    private $links;
+    /**
+     * @var Paypal\Api\Payee
+     */
+    private $payee;
+    /**
+     * @var Paypal\Api\Payer
+     */
+    private $payer;
+    /**
+     * @var Paypal\Api\PayerInfo
+     */
+    private $payerInfo;
+    /**
+     * @var Paypal\Api\Payment
+     */
+    private $payment;
+    /**
+     * @var Paypal\Api\PaymentExecution
+     */
+    private $paymentExecution;
+    /**
+     * @var Paypal\Api\PaymentHistory
+     */
+    private $paymentHistory;
+    /**
+     * @var Paypal\Api\RedirectUrls
+     */
+    private $redirectUrls;
+    /**
+     * @var Paypal\Api\Refund
+     */
+    private $refund;
+    /**
+     * @var Paypal\Api\RelatedResources
+     */
+    private $relatedResources;
+    /**
+     * @var Paypal\Api\Sale
+     */
+    private $sale;
+    /**
+     * @var Paypal\Api\ShippingAddress
+     */
+    private $shippingAddress;
+    /**
+     * @var Paypal\Api\Transactions
+     */
+    private $transactions;
+    /**
+     * @var Paypal\Api\Transaction
+     */
+    private $transaction;
 
-    public static function Address()
+    /**
+     * @param Address $address
+     * @param Amount $amount
+     * @param Details $details
+     * @param Authorization $authorization
+     * @param Capture $capture
+     * @param CreditCard $creditCard
+     * @param CreditCardToken $creditCardToken
+     * @param FundingInstrument $fundingInstrument
+     * @param Item $item
+     * @param ItemList $itemList
+     * @param Links $links
+     * @param Payee $payee
+     * @param Payer $payer
+     * @param PayerInfo $payerInfo
+     * @param Payment $payment
+     * @param PaymentExecution $paymentExecution
+     * @param PaymentHistory $paymentHistory
+     * @param RedirectUrls $redirectUrls
+     * @param Refund $refund
+     * @param RelatedResources $relatedResources
+     * @param Sale $sale
+     * @param ShippingAddress $shippingAddress
+     * @param Transactions $transactions
+     * @param Transaction $transaction
+     */
+    public function __construct(Address $address, Amount $amount, Details $details, Authorization $authorization,
+                    Capture $capture, CreditCard $creditCard, CreditCardToken $creditCardToken,
+                    FundingInstrument $fundingInstrument,Item $item, ItemList $itemList, Links $links,
+                    Payee $payee, Payer $payer, PayerInfo $payerInfo,Payment $payment, PaymentExecution $paymentExecution,
+                    PaymentHistory $paymentHistory, RedirectUrls $redirectUrls, Refund $refund,RelatedResources $relatedResources,
+                    Sale $sale, ShippingAddress $shippingAddress, Transactions $transactions,Transaction $transaction
+            )
     {
-        return new Address();
+        $this->address = $address;
+        $this->amount = $amount;
+        $this->details = $details;
+        $this->authorization = $authorization;
+        $this->capture = $capture;
+        $this->creditCard = $creditCard;
+        $this->creditCardToken = $creditCardToken;
+        $this->fundingInstrument = $fundingInstrument;
+        $this->item = $item;
+        $this->itemList = $itemList;
+        $this->links = $links;
+        $this->payee = $payee;
+        $this->payer = $payer;
+        $this->payerInfo = $payerInfo;
+        $this->payment = $payment;
+        $this->paymentExecution = $paymentExecution;
+        $this->paymentHistory = $paymentHistory;
+        $this->redirectUrls = $redirectUrls;
+        $this->refund = $refund;
+        $this->relatedResources = $relatedResources;
+        $this->sale = $sale;
+        $this->shippingAddress = $shippingAddress;
+        $this->transactions = $transactions;
+        $this->transaction = $transaction;
     }
 
-    public static function Amount()
+    /**
+     * @return Paypal\Api\Address
+     */
+    public function address()
     {
-        return new Amount();
+        return $this->address;
     }
 
-    public static function AmountDetails()
+    /**
+     * @return Paypal\Api\Amount
+     */
+    public function amount()
     {
-        return new Details();
+        return $this->amount;
     }
 
-    public static function Authorization()
+    /**
+     * @return Paypal\Api\Details
+     */
+    public  function details()
     {
-        return new Authorization();
+        return $this->details;
     }
 
-    public static function Capture()
+    /**
+     * @return Paypal\Api\Authorization
+     */
+    public  function authorization()
     {
-        return new Capture();
+        return $this->authorization;
     }
 
-    public static function CreditCard()
+    /**
+     * @return Paypal\Api\Capture
+     */
+    public  function capture()
     {
-        return new CreditCard();
+        return $this->capture;
     }
 
-    public static function CreditCardToken()
+    /**
+     * @return Paypal\Api\CreditCard
+     */
+    public  function creditCard()
     {
-        return new CreditCardToken();
+        return $this->creditCard;
     }
 
-    public static function FundingInstrument()
+    /**
+     * @return Paypal\Api\CreditCardToken
+     */
+    public  function creditCardToken()
     {
-        return new FundingInstrument();
+        return $this->creditCardToken;
     }
 
-    public static function Item()
+    /**
+     * @return Paypal\Api\FundingInstrument
+     */
+    public  function fundingInstrument()
     {
-        return new Item();
+        return $this->fundingInstrument;
     }
 
-    public static function ItemList()
+    /**
+     * @return Paypal\Api\Item
+     */
+    public  function item()
     {
-        return new ItemList();
+        return $this->item;
     }
 
-    public static function Link()
+    /**
+     * @return Paypal\Api\ItemList
+     */
+    public  function itemList()
     {
-        return new Link();
+        return $this->itemList;
     }
 
-    public static function Payee()
+    /**
+     * @return Paypal\Api\Links
+     */
+    public  function links()
     {
-        return new Payee();
+        return $this->links;
     }
 
-    public static function Payer()
+    /**
+     * @return Paypal\Api\Payee
+     */
+    public  function payee()
     {
-        return new Payer();
+        return $this->payee;
     }
 
-    public static function PayerInfo()
+    /**
+     * @return Paypal\Api\Payer
+     */
+    public  function payer()
     {
-        return new PayerInfo();
+        return $this->payer;
     }
 
-    public static function Payment()
+    /**
+     * @return Paypal\Api\PayerInfo
+     */
+    public  function payerInfo()
     {
-        return new Payment();
+        return $this->payerInfo;
     }
 
-    public static function PaymentExecution()
+    /**
+     * @return Paypal\Api\Payment
+     */
+    public  function payment()
     {
-        return new PaymentExecution();
+        return $this->payment;
     }
 
-    public static function PaymentHistory()
+    /**
+     * @return Paypal\Api\PaymentExecution
+     */
+    public  function paymentExecution()
     {
-        return new PaymentHistory();
+        return $this->paymentExecution;
     }
 
-    public static function RedirectUrls()
+    /**
+     * @return Paypal\Api\PaymentHistory
+     */
+    public  function paymentHistory()
     {
-        return new RedirectUrls();
+        return $this->paymentHistory;
     }
 
-    public static function Refund()
+    /**
+     * @return Paypal\Api\RedirectUrls
+     */
+    public  function redirectUrls()
     {
-        return new Refund();
+        return $this->redirectUrls;
     }
 
-    public static function Resource()
+    /**
+     * @return Paypal\Api\Refund
+     */
+    public  function refund()
     {
-        return new Resource();
+        return $this->refund;
     }
 
-    public static function Sale()
+    /**
+     * @return Paypal\Api\RelatedResources
+     */
+    public  function relatedResources()
     {
-        return new Sale();
+        return $this->relatedResources;
     }
 
-    public static function ShippingAddress()
+    /**
+     * @return Paypal\Api\Sale
+     */
+    public  function sale()
     {
-        return new ShippingAddress();
+        return $this->sale;
     }
 
-    public static function SubTransaction()
+    /**
+     * @return Paypal\Api\ShippingAddress
+     */
+    public  function shippingAddress()
     {
-        return new SubTransaction();
+        return $this->shippingAddress;
     }
 
-    public static function Transaction()
+    /**
+     * @return Paypal\Api\Transactions
+     */
+    public  function transactions()
     {
-        return new Transaction();
+        return $this->transactions;
+    }
+
+    /**
+     * @return Paypal\Api\Transaction
+     */
+    public function transaction()
+    {
+        return $this->transaction;
     }
 
 
-    public static function ApiContext($credential, $requestId=null)
+    /**
+     * @param null $clientId
+     * @param null $clientSecret
+     * @param null $requestId
+     * @return Paypal\Rest\ApiContext
+     */
+    public function apiContext($clientId = null, $clientSecret = null, $requestId = null)
     {
-        return new ApiContext($credential, $requestId);
+        $credentials = Self::OAuthTokenCredential($clientId, $clientSecret);
+
+        return new ApiContext($credentials, $requestId);
     }
 
-
-    // Utilities functions
-
-    public static function OAuthTokenCredential($ClientId=null,$ClientSecret=null)
+    /**
+     * @param null $ClientId
+     * @param null $ClientSecret
+     * @return PayPal/Auth/OAuthTokenCredential
+     */
+    public  static function OAuthTokenCredential($ClientId = null, $ClientSecret=null)
     {
-        define("PP_CONFIG_PATH", __DIR__);
+        //define("PP_CONFIG_PATH", __DIR__);
 
         if(isset($ClientId) && isset($ClientSecret)) {
-          return new OAuthTokenCredential($ClientId,$ClientSecret);
+          return new OAuthTokenCredential($ClientId, $ClientSecret);
         }
 
-        $configManager  = \PPConfigManager::getInstance();
-
+        $configManager  = PPConfigManager::getInstance();
         // $cred is used by samples that include this bootstrap file
         // This piece of code simply demonstrates how you can
         // dynamically pass in a client id/secret instead of using
@@ -179,20 +416,28 @@ class PaypalPayment{
         // <Resource>::setCredential($cred) calls that
         // you see in the samples.
 
-        $cred =new OAuthTokenCredential(
+        $cred = new OAuthTokenCredential(
             $configManager->get('acct1.ClientId'),
             $configManager->get('acct1.ClientSecret'));
 
         return $cred;
     }
  
-    // utility functions that returns base url for
-    public static function getBaseUrl()
+    /**
+     * Get the base URL
+     * @return mixed
+     */
+    public function getBaseUrl()
     {
         return URL::to('/');
     }
 
-    // grape payment details using the paymentId
+    /**
+     * grape payment details using the paymentId
+     * @param $paymentId
+     * @param null $apiContext
+     * @return Paypal\Api\Payment
+     */
     public static function get($paymentId, $apiContext = null)
     {
         if (isset($apiContext)) {
@@ -201,7 +446,12 @@ class PaypalPayment{
         return Payment::get($paymentId);
     }
 
-    // grape all payment details
+    /**
+     * grape all payment details
+     * @param $param
+     * @param null $apiContext
+     * @return Paypal\Api\Payment
+     */
     public static function all($param,$apiContext = null)
     {
         if (isset($apiContext)) {
