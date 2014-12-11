@@ -31,169 +31,13 @@ use PayPal\Auth\OAuthTokenCredential;
 
 class PaypalPayment{
 
-    /**
-     * @var Paypal\Api\Address
-     */
-    private $address;
-    /**
-     * @var Paypal\Api\Amount
-     */
-    private $amount;
-    /**
-     * @var Paypal\Api\Details
-     */
-    private $details;
-    /**
-     * @var Paypal\Api\Authorization
-     */
-    private $authorization;
-    /**
-     * @var Paypal\Api\Capture
-     */
-    private $capture;
-    /**
-     * @var Paypal\Api\CreditCard
-     */
-    private $creditCard;
-    /**
-     * @var Paypal\Api\CreditCardToken
-     */
-    private $creditCardToken;
-    /**
-     * @var Paypal\Api\FundingInstrument
-     */
-    private $fundingInstrument;
-    /**
-     * @var Paypal\Api\Item
-     */
-    private $item;
-    /**
-     * @var Paypal\Api\ItemList
-     */
-    private $itemList;
-    /**
-     * @var Paypal\Api\Links
-     */
-    private $links;
-    /**
-     * @var Paypal\Api\Payee
-     */
-    private $payee;
-    /**
-     * @var Paypal\Api\Payer
-     */
-    private $payer;
-    /**
-     * @var Paypal\Api\PayerInfo
-     */
-    private $payerInfo;
-    /**
-     * @var Paypal\Api\Payment
-     */
-    private $payment;
-    /**
-     * @var Paypal\Api\PaymentExecution
-     */
-    private $paymentExecution;
-    /**
-     * @var Paypal\Api\PaymentHistory
-     */
-    private $paymentHistory;
-    /**
-     * @var Paypal\Api\RedirectUrls
-     */
-    private $redirectUrls;
-    /**
-     * @var Paypal\Api\Refund
-     */
-    private $refund;
-    /**
-     * @var Paypal\Api\RelatedResources
-     */
-    private $relatedResources;
-    /**
-     * @var Paypal\Api\Sale
-     */
-    private $sale;
-    /**
-     * @var Paypal\Api\ShippingAddress
-     */
-    private $shippingAddress;
-    /**
-     * @var Paypal\Api\Transactions
-     */
-    private $transactions;
-    /**
-     * @var Paypal\Api\Transaction
-     */
-    private $transaction;
-
-    /**
-     * @param Address $address
-     * @param Amount $amount
-     * @param Details $details
-     * @param Authorization $authorization
-     * @param Capture $capture
-     * @param CreditCard $creditCard
-     * @param CreditCardToken $creditCardToken
-     * @param FundingInstrument $fundingInstrument
-     * @param Item $item
-     * @param ItemList $itemList
-     * @param Links $links
-     * @param Payee $payee
-     * @param Payer $payer
-     * @param PayerInfo $payerInfo
-     * @param Payment $payment
-     * @param PaymentExecution $paymentExecution
-     * @param PaymentHistory $paymentHistory
-     * @param RedirectUrls $redirectUrls
-     * @param Refund $refund
-     * @param RelatedResources $relatedResources
-     * @param Sale $sale
-     * @param ShippingAddress $shippingAddress
-     * @param Transactions $transactions
-     * @param Transaction $transaction
-     */
-    public function __construct(Address $address, Amount $amount, Details $details, Authorization $authorization,
-                    Capture $capture, CreditCard $creditCard, CreditCardToken $creditCardToken,
-                    FundingInstrument $fundingInstrument,Item $item, ItemList $itemList, Links $links,
-                    Payee $payee, Payer $payer, PayerInfo $payerInfo,Payment $payment, PaymentExecution $paymentExecution,
-                    PaymentHistory $paymentHistory, RedirectUrls $redirectUrls, Refund $refund,RelatedResources $relatedResources,
-                    Sale $sale, ShippingAddress $shippingAddress, Transactions $transactions,Transaction $transaction
-            )
-    {
-        $this->address = $address;
-        $this->amount = $amount;
-        $this->details = $details;
-        $this->authorization = $authorization;
-        $this->capture = $capture;
-        $this->creditCard = $creditCard;
-        $this->creditCardToken = $creditCardToken;
-        $this->fundingInstrument = $fundingInstrument;
-        $this->item = $item;
-        $this->itemList = $itemList;
-        $this->links = $links;
-        $this->payee = $payee;
-        $this->payer = $payer;
-        $this->payerInfo = $payerInfo;
-        $this->payment = $payment;
-        $this->paymentExecution = $paymentExecution;
-        $this->paymentHistory = $paymentHistory;
-        $this->redirectUrls = $redirectUrls;
-        $this->refund = $refund;
-        $this->relatedResources = $relatedResources;
-        $this->sale = $sale;
-        $this->shippingAddress = $shippingAddress;
-        $this->transactions = $transactions;
-        $this->transaction = $transaction;
-    }
 
     /**
      * @return Paypal\Api\Address
      */
     public function address()
     {
-        return $this->address;
+        return new Address;
     }
 
     /**
@@ -201,7 +45,7 @@ class PaypalPayment{
      */
     public function amount()
     {
-        return $this->amount;
+        return new Amount;
     }
 
     /**
@@ -209,7 +53,7 @@ class PaypalPayment{
      */
     public  function details()
     {
-        return $this->details;
+        return new Details;
     }
 
     /**
@@ -217,7 +61,7 @@ class PaypalPayment{
      */
     public  function authorization()
     {
-        return $this->authorization;
+        return new Authorization;
     }
 
     /**
@@ -225,7 +69,7 @@ class PaypalPayment{
      */
     public  function capture()
     {
-        return $this->capture;
+        return new Capture;
     }
 
     /**
@@ -233,7 +77,7 @@ class PaypalPayment{
      */
     public  function creditCard()
     {
-        return $this->creditCard;
+        return new CreditCard;
     }
 
     /**
@@ -241,7 +85,7 @@ class PaypalPayment{
      */
     public  function creditCardToken()
     {
-        return $this->creditCardToken;
+        return new CreditCardToken;
     }
 
     /**
@@ -249,7 +93,7 @@ class PaypalPayment{
      */
     public  function fundingInstrument()
     {
-        return $this->fundingInstrument;
+        return new FundingInstrument;
     }
 
     /**
@@ -257,7 +101,7 @@ class PaypalPayment{
      */
     public  function item()
     {
-        return $this->item;
+        return new Item;
     }
 
     /**
@@ -265,7 +109,7 @@ class PaypalPayment{
      */
     public  function itemList()
     {
-        return $this->itemList;
+        return new ItemList;
     }
 
     /**
@@ -273,7 +117,7 @@ class PaypalPayment{
      */
     public  function links()
     {
-        return $this->links;
+        return new Links;
     }
 
     /**
@@ -281,7 +125,7 @@ class PaypalPayment{
      */
     public  function payee()
     {
-        return $this->payee;
+        return new Payee;
     }
 
     /**
@@ -289,7 +133,7 @@ class PaypalPayment{
      */
     public  function payer()
     {
-        return $this->payer;
+        return new Payer;
     }
 
     /**
@@ -297,7 +141,7 @@ class PaypalPayment{
      */
     public  function payerInfo()
     {
-        return $this->payerInfo;
+        return new PayerInfo;
     }
 
     /**
@@ -305,7 +149,7 @@ class PaypalPayment{
      */
     public  function payment()
     {
-        return $this->payment;
+        return new Payment;
     }
 
     /**
@@ -313,7 +157,7 @@ class PaypalPayment{
      */
     public  function paymentExecution()
     {
-        return $this->paymentExecution;
+        return new PaymentExecution;
     }
 
     /**
@@ -321,7 +165,7 @@ class PaypalPayment{
      */
     public  function paymentHistory()
     {
-        return $this->paymentHistory;
+        return new PaymentHistory;
     }
 
     /**
@@ -329,7 +173,7 @@ class PaypalPayment{
      */
     public  function redirectUrls()
     {
-        return $this->redirectUrls;
+        return new RedirectUrls;
     }
 
     /**
@@ -337,7 +181,7 @@ class PaypalPayment{
      */
     public  function refund()
     {
-        return $this->refund;
+        return new Refund;
     }
 
     /**
@@ -345,7 +189,7 @@ class PaypalPayment{
      */
     public  function relatedResources()
     {
-        return $this->relatedResources;
+        return new RelatedResources;
     }
 
     /**
@@ -353,7 +197,7 @@ class PaypalPayment{
      */
     public  function sale()
     {
-        return $this->sale;
+        return new Sale;
     }
 
     /**
@@ -361,7 +205,7 @@ class PaypalPayment{
      */
     public  function shippingAddress()
     {
-        return $this->shippingAddress;
+        return new ShippingAddress;
     }
 
     /**
@@ -369,7 +213,7 @@ class PaypalPayment{
      */
     public  function transactions()
     {
-        return $this->transactions;
+        return new Transactions;
     }
 
     /**
@@ -377,7 +221,7 @@ class PaypalPayment{
      */
     public function transaction()
     {
-        return $this->transaction;
+        return new Transaction;
     }
 
 
@@ -438,7 +282,7 @@ class PaypalPayment{
      * @param null $apiContext
      * @return Paypal\Api\Payment
      */
-    public static function get($paymentId, $apiContext = null)
+    public static function getById($paymentId, $apiContext = null)
     {
         if (isset($apiContext)) {
             return Payment::get($paymentId, $apiContext);
@@ -452,7 +296,7 @@ class PaypalPayment{
      * @param null $apiContext
      * @return Paypal\Api\Payment
      */
-    public static function all($param,$apiContext = null)
+    public static function getAll($param,$apiContext = null)
     {
         if (isset($apiContext)) {
             return Payment::all($param, $apiContext);

@@ -33,143 +33,129 @@ use Prophecy\Argument;
 
 class PaypalPaymentSpec extends ObjectBehavior
 {
-    function let(Address $address, Amount $amount, Details $amountDetails, Authorization $authorization,
-                     Capture $capture, CreditCard $creditCard, CreditCardToken $creditCardToken,
-                     FundingInstrument $fundingInstrument,Item $item, ItemList $itemList, Links $links,
-                     Payee $payee, Payer $payer, PayerInfo $payerInfo,Payment $payment, PaymentExecution $paymentExecution,
-                     PaymentHistory $paymentHistory, RedirectUrls $redirectUrls, Refund $refund,RelatedResources $relatedResources,
-                     Sale $sale, ShippingAddress $shippingAddress, Transactions $transactions,Transaction $transaction
-                )
-    {
-        $this->beConstructedWith($address, $amount, $amountDetails,$authorization, $capture,$creditCard,  $creditCardToken,
-                  $fundingInstrument, $item,  $itemList,  $links,$payee,  $payer,  $payerInfo, $payment,  $paymentExecution,
-                  $paymentHistory,  $redirectUrls,  $refund, $relatedResources,$sale,  $shippingAddress,  $transactions,
-                  $transaction
-        );
-    }
 
     function it_is_initializable()
     {
         $this->shouldHaveType('Anouar\Paypalpayment\PaypalPayment');
     }
 
-    public function it_is_return_address_object(Address $address)
+    public function it_is_return_address_object()
     {
-        $this->address()->shouldReturn($address);
+        $this->address()->shouldBeAnInstanceOf(new Address);
     }
 
-    public function it_is_return_amount_object(Amount $amount)
+    public function it_is_return_amount_object()
     {
-        $this->amount()->shouldReturn($amount);
+        $this->amount()->shouldBeAnInstanceOf(new Amount);
     }
 
-    public function it_is_return_amountDetails_object(Details $amountDetails)
+    public function it_is_return_amountDetails_object()
     {
-        $this->amountDetails()->shouldReturn($amountDetails);
+        $this->details()->shouldBeAnInstanceOf(new Details);
     }
 
-    public function it_is_return_authorization_object(Authorization $authorization)
+    public function it_is_return_authorization_object()
     {
-        $this->authorization()->shouldReturn($authorization);
+        $this->authorization()->shouldBeAnInstanceOf(new Authorization);
     }
 
-    public function it_is_return_capture_object(Capture $capture)
+    public function it_is_return_capture_object()
     {
-        $this->capture()->shouldReturn($capture);
+        $this->capture()->shouldBeAnInstanceOf(new Capture);
     }
-    public  function it_is_return_reditCard_object(CreditCard $creditCard)
+    public  function it_is_return_creditCard_object()
     {
-        $this->creditCard()->shouldReturn($creditCard);
-    }
-
-    public function it_is_return_creditCardToken_object(CreditCardToken $creditCardToken)
-    {
-        $this->creditCardToken()->shouldReturn($creditCardToken);
+        $this->creditCard()->shouldBeAnInstanceOf(new CreditCard);
     }
 
-    public function it_is_return_fundingInstrument_object(FundingInstrument $fundingInstrument)
+    public function it_is_return_creditCardToken_object()
     {
-        $this->fundingInstrument()->shouldReturn($fundingInstrument);
+        $this->creditCardToken()->shouldBeAnInstanceOf(new CreditCardToken);
     }
 
-    public function it_is_return_item_object(Item $item)
+    public function it_is_return_fundingInstrument_object()
     {
-        $this->item()->shouldReturn($item);
+        $this->fundingInstrument()->shouldBeAnInstanceOf(new FundingInstrument);
     }
 
-    public function it_is_return_itemList_object(ItemList $itemList)
+    public function it_is_return_item_object()
     {
-        $this->itemList()->shouldReturn($itemList);
+        $this->item()->shouldBeAnInstanceOf(new Item);
     }
 
-    public function it_is_return_link_object(Links $links)
+    public function it_is_return_itemList_object()
     {
-        $this->links()->shouldReturn($links);
+        $this->itemList()->shouldBeAnInstanceOf(new ItemList);
     }
 
-    public  function it_is_return_payee_object(Payee $payee)
+    public function it_is_return_link_object()
     {
-        $this->payee()->shouldReturn($payee);
+        $this->links()->shouldBeAnInstanceOf(new Links);
     }
 
-    public function it_is_return_payer_object(Payer $payer)
+    public  function it_is_return_payee_object()
     {
-        $this->payer()->shouldReturn($payer);
+        $this->payee()->shouldBeAnInstanceOf(new Payee);
     }
 
-    public function it_is_return_payerInfo_object(PayerInfo $payerInfo)
+    public function it_is_return_payer_object()
     {
-        $this->payerInfo()->shouldReturn($payerInfo);
+        $this->payer()->shouldBeAnInstanceOf(new Payer);
     }
 
-    public  function its_is_return_Payment(Payment $payment)
+    public function it_is_return_payerInfo_object()
     {
-        $this->payment()->shouldReturn($payment);
+        $this->payerInfo()->shouldBeAnInstanceOf(new PayerInfo);
     }
 
-    public  function its_is_return_PaymentExecution(PaymentExecution $paymentExecution)
+    public  function its_is_return_Payment()
     {
-        $this->paymentExecution()->shouldReturn($paymentExecution);
+        $this->payment()->shouldBeAnInstanceOf(new Payment);
     }
 
-    public  function its_is_return_PaymentHistory(PaymentHistory $paymentHistory)
+    public  function its_is_return_PaymentExecution()
     {
-        $this->paymentHistory()->shouldReturn($paymentHistory);
+        $this->paymentExecution()->shouldBeAnInstanceOf(new PaymentExecution);
     }
 
-    public  function its_is_return_RedirectUrls(RedirectUrls $redirectUrls)
+    public  function its_is_return_PaymentHistory()
     {
-        $this->redirectUrls()->shouldReturn($redirectUrls);
+        $this->paymentHistory()->shouldBeAnInstanceOf(new PaymentHistory);
     }
 
-    public  function its_is_return_Refund(Refund $refund)
+    public  function its_is_return_RedirectUrls()
     {
-        $this->refund()->shouldReturn($refund);
+        $this->redirectUrls()->shouldBeAnInstanceOf(new RedirectUrls);
     }
 
-    public  function its_is_return_Resource(RelatedResources $relatedResources)
+    public  function its_is_return_Refund()
     {
-        $this->relatedResources()->shouldReturn($relatedResources);
+        $this->refund()->shouldBeAnInstanceOf(new Refund);
     }
 
-    public  function its_is_return_Sale(Sale $sale)
+    public  function its_is_return_Resource()
     {
-        $this->sale()->shouldReturn($sale);
+        $this->relatedResources()->shouldBeAnInstanceOf(new RelatedResources);
     }
 
-    public  function its_is_return_ShippingAddress(ShippingAddress $shippingAddress)
+    public  function its_is_return_Sale()
     {
-        $this->shippingAddress()->shouldReturn($shippingAddress);
+        $this->sale()->shouldBeAnInstanceOf(new Sale);
     }
 
-    public  function its_is_return_Transaction(Transaction $transaction)
+    public  function its_is_return_ShippingAddress()
     {
-        $this->transaction()->shouldReturn($transaction);
+        $this->shippingAddress()->shouldBeAnInstanceOf(new ShippingAddress);
     }
 
-    public  function its_is_return_Transactions(Transactions $transactions)
+    public  function its_is_return_Transaction()
     {
-        $this->transactions()->shouldReturn($transactions);
+        $this->transaction()->shouldBeAnInstanceOf(new Transaction);
+    }
+
+    public  function its_is_return_Transactions()
+    {
+        $this->transactions()->shouldBeAnInstanceOf(new Transactions);
     }
 
 

@@ -54,11 +54,7 @@ class PaypalpaymentServiceProvider extends ServiceProvider {
     {
         $this->app['paypalpayment'] = $this->app->share(function($app)
         {
-            return new PaypalPayment(new Address , new Amount , new Details , new Authorization , new Capture,
-                new CreditCard , new CreditCardToken , new FundingInstrument, new Item , new ItemList , new Links ,
-                new Payee, new Payer, new PayerInfo, new Payment, new PaymentExecution, new PaymentHistory, new RedirectUrls,
-                new Refund, new RelatedResources, new Sale, new ShippingAddress, new Transactions, new Transaction
-            );
+            return new PaypalPayment();
         });
     }
 
