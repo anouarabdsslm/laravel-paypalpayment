@@ -296,7 +296,7 @@ class PaypalPayment{
      * @param null $apiContext
      * @return Paypal\Api\Payment
      */
-    public static function getAll($param,$apiContext = null)
+    public static function getAll($param, $apiContext = null)
     {
         if (isset($apiContext)) {
             return Payment::all($param, $apiContext);

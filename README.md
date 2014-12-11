@@ -113,12 +113,7 @@ If you do not want to use an ini file or want to pick your configuration dynamic
         // (that ensures idempotency). The SDK generates
         // a request id if you do not pass one explicitly. 
 
-        $this->_apiContext = Paypalpayment::ApiContext(
-            Paypalpayment::OAuthTokenCredential(
-                $this->_ClientId,
-                $this->_ClientSecret
-            )
-        );
+        $this->_apiContext = Paypalpayment::ApiContext($this->_ClientId, $this->_ClientSecret);
 
         // Uncomment this step if you want to use per request 
         // dynamic configuration instead of using sdk_config.ini
@@ -154,44 +149,41 @@ class PaypalPaymentController extends BaseController {
 
     /**
      * Set the ClientId and the ClientSecret.
-     * @param 
+     * @param
      *string $_ClientId
      *string $_ClientSecret
      */
-    private $_ClientId='AVJx0RArQzkCCsWC0evZi1SsoO4gxjDkkULQBdmPNBZT4fc14AROUq-etMEY';
-    private $_ClientSecret='EH5F0BAxqonVnP8M4a0c6ezUHq-UT-CWfGciPNQOdUlTpWPkNyuS6eDN-tpA';
+    private $_ClientId = 'AVJx0RArQzkCCsWC0evZi1SsoO4gxjDkkULQBdmPNBZT4fc14AROUq-etMEU';
+    private $_ClientSecret='EH5F0BAxqonVnP8M4a0c6ezUHq-UT-CWfGciPNQOdUlTpWPkNyuS6eDN-tpB';
 
     /*
-     *   These construct set the SDK configuration dynamiclly, 
+     *   These construct set the SDK configuration dynamiclly,
      *   If you want to pick your configuration from the sdk_config.ini file
      *   make sure to update you configuration there then grape the credentials using this code :
      *   $this->_cred= Paypalpayment::OAuthTokenCredential();
     */
     public function __construct()
     {
+
         // ### Api Context
-        // Pass in a `ApiContext` object to authenticate 
-        // the call. You can also send a unique request id 
+        // Pass in a `ApiContext` object to authenticate
+        // the call. You can also send a unique request id
         // (that ensures idempotency). The SDK generates
-        // a request id if you do not pass one explicitly. 
+        // a request id if you do not pass one explicitly.
 
-        $this->_apiContext = Paypalpayment:: ApiContext(
-            Paypalpayment::OAuthTokenCredential(
-                $this->_ClientId,
-                $this->_ClientSecret
-            )
-        );
+        $this->_apiContext = Paypalpayment::ApiContext($this->_ClientId, $this->_ClientSecret);
 
+        // Uncomment this step if you want to use per request
         // dynamic configuration instead of using sdk_config.ini
 
         $this->_apiContext->setConfig(array(
             'mode' => 'sandbox',
+            'service.EndPoint' => 'https://api.sandbox.paypal.com',
             'http.ConnectionTimeOut' => 30,
             'log.LogEnabled' => true,
             'log.FileName' => __DIR__.'/../PayPal.log',
             'log.LogLevel' => 'FINE'
         ));
-
     }
      
 }
@@ -203,15 +195,22 @@ Add the `create()` function to the `PaypalPaymentController` Controller
 ```php
 
     /*
-     * Create payment using credit card
-     * url:payment/create
+    * Display form to process payment using credit card
     */
     public function create()
+    {
+        return View::mak('payment.order')
+    }
+
+    /*
+    * Process payment using credit card
+    */
+    public function store()
     {
         // ### Address
         // Base Address object used as shipping or billing
         // address in a payment. [Optional]
-        $addr= Paypalpayment::Address();
+        $addr= Paypalpayment::address();
         $addr->setLine1("3909 Witmer Road");
         $addr->setLine2("Niagara Falls");
         $addr->setCity("Niagara Falls");
@@ -221,17 +220,14 @@ Add the `create()` function to the `PaypalPaymentController` Controller
         $addr->setPhone("716-298-1822");
 
         // ### CreditCard
-        // A resource representing a credit card that can be
-        // used to fund a payment.
-        $card = Paypalpayment::CreditCard();
-        $card->setType("visa");
-        $card->setNumber("4417119669820331");
-        $card->setExpire_month("11");
-        $card->setExpire_year("2019");
-        $card->setCvv2("012");
-        $card->setFirst_name("Anouar");
-        $card->setLast_name("Abdessalam");
-        $card->setBilling_address($addr);
+        $card = Paypalpayment::creditCard();
+        $card->setType("visa")
+            ->setNumber("4758411877817150")
+            ->setExpireMonth("05")
+            ->setExpireYear("2019")
+            ->setCvv2("456")
+            ->setFirstName("Joe")
+            ->setLastName("Shopper");
 
         // ### FundingInstrument
         // A resource representing a Payer's funding instrument.
@@ -239,61 +235,86 @@ Add the `create()` function to the `PaypalPaymentController` Controller
         // and provided by the facilitator. This is required when
         // creating or using a tokenized funding instrument)
         // and the `CreditCardDetails`
-        $fi = Paypalpayment::FundingInstrument();
+        $fi = Paypalpayment::fundingInstrument();
         $fi->setCredit_card($card);
 
         // ### Payer
         // A resource representing a Payer that funds a payment
         // Use the List of `FundingInstrument` and the Payment Method
         // as 'credit_card'
-        $payer = Paypalpayment::Payer();
-        $payer->setPayment_method("credit_card");
-        $payer->setFunding_instruments(array($fi));
+        $payer = Paypalpayment::payer();
+        $payer->setPaymentMethod("credit_card")
+            ->setFundingInstruments(array($fi));
 
-        // ### Amount
-        // Let's you specify a payment amount.
-        $amount = Paypalpayment:: Amount();
-        $amount->setCurrency("USD");
-        $amount->setTotal("1.00");
+        $item1 = Paypalpayment::item();
+        $item1->setName('Ground Coffee 40 oz')
+                ->setDescription('Ground Coffee 40 oz')
+                ->setCurrency('USD')
+                ->setQuantity(1)
+                ->setTax(0.3)
+                ->setPrice(7.50);
+
+        $item2 = Paypalpayment::item();
+        $item2->setName('Granola bars')
+                ->setDescription('Granola Bars with Peanuts')
+                ->setCurrency('USD')
+                ->setQuantity(5)
+                ->setTax(0.2)
+                ->setPrice(2);
+
+
+        $itemList = Paypalpayment::itemList();
+        $itemList->setItems(array($item1,$item2));
+
+
+        $details = Paypalpayment::details();
+        $details->setShipping("1.2")
+                ->setTax("1.3")
+                //total of items prices
+                ->setSubtotal("17.5");
+
+        //Payment Amount
+        $amount = Paypalpayment::amount();
+        $amount->setCurrency("USD")
+                // the total is $17.8 = (16 + 0.6) * 1 ( of quantity) + 1.2 ( of Shipping).
+                ->setTotal("20")
+                ->setDetails($details);
 
         // ### Transaction
         // A transaction defines the contract of a
         // payment - what is the payment for and who
         // is fulfilling it. Transaction is created with
         // a `Payee` and `Amount` types
-        $transaction = Paypalpayment:: Transaction();
-        $transaction->setAmount($amount);
-        $transaction->setDescription("This is the payment description.");
+
+        $transaction = Paypalpayment::transaction();
+        $transaction->setAmount($amount)
+            ->setItemList($itemList)
+            ->setDescription("Payment description")
+            ->setInvoiceNumber(uniqid());
 
         // ### Payment
         // A Payment Resource; create one using
         // the above types and intent as 'sale'
-        $payment = Paypalpayment:: Payment();
-        $payment->setIntent("sale");
-        $payment->setPayer($payer);
-        $payment->setTransactions(array($transaction));
 
-        // ### Create Payment
-        // Create a payment by posting to the APIService
-        // using a valid ApiContext
-        // The return object contains the status;
+        $payment = Paypalpayment::payment();
+
+        $payment->setIntent("sale")
+            ->setPayer($payer)
+            ->setTransactions(array($transaction));
+
         try {
+            // ### Create Payment
+            // Create a payment by posting to the APIService
+            // using a valid ApiContext
+            // The return object contains the status;
             $payment->create($this->_apiContext);
         } catch (\PPConnectionException $ex) {
-            return "Exception: " . $ex->getMessage() . PHP_EOL;
-            var_dump($ex->getData());
+            return  "Exception: " . $ex->getMessage() . PHP_EOL;
             exit(1);
         }
 
-        $response=$payment->toArray();
-
-        echo"<pre>";
-        print_r($response);
-       
-        //var_dump($payment->getId());
-
-        //print_r($payment->toArray());//$payment->toJson();
-    }  
+        dd($payment);
+    } 
 ```
 ##3-List Payment
 Add the `index()` function to the `PaypalPaymentController` Controller 
@@ -306,9 +327,9 @@ Add the `index()` function to the `PaypalPaymentController` Controller
     {
         echo "<pre>";
 
-        $payments = Paypalpayment::all(array('count' => 1, 'start_index' => 0),$this->_apiContext);
+        $payments = Paypalpayment::getAll(array('count' => 1, 'start_index' => 0), $this->_apiContext);
 
-        print_r($payments);
+        dd($payments);
     }
 ```
 
@@ -323,11 +344,9 @@ Add the `show()` function to the `PaypalPaymentController` Controller
 
     public function show($payment_id)
     {
-       $payment = Paypalpayment::get($payment_id,$this->_apiContext);
+       $payment = Paypalpayment::getById($payment_id,$this->_apiContext);
 
-       echo "<pre>";
-
-       print_r($payment);
+       dd($payment);
     }
 ```
 
@@ -346,7 +365,7 @@ Only for Payment with `payment_method` as `"paypal"`
     // The payer_id is added to the request query parameters
     // when the user is redirected from paypal back to your site
     $execution = Paypalpayment::PaymentExecution();
-    $execution->setPayer_id($PayerID);
+    $execution->setPayerId($PayerID);
     
     //Execute the payment
     $payment->execute($execution,$this->_apiContext);
