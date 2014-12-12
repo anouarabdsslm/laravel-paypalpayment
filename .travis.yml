@@ -1,14 +1,10 @@
 php: [5.3.3, 5.3, 5.4, 5.5, 5.6, hhvm, hhvm-nightly]
 
 before_script:
-  - composer self-update
-
-install:
-  - composer install
-
+  - composer.phar self-update
+  - composer.phar install
 script:
   - vendor/bin/phpspec run -v
-
 env:
   global:
   -secure: qu/5u2aHH1gXdlTISscN/AaPTYF9iyczIZ8u2vOULf3VouSIJB4swxUfszIdIDfyhzokxn0z5RkoopYcIgYKlu9m29V7xbRObrUrZWalJzaCuMf5LpEyOsV1VaEhZVSl25V9mcbGJrcw2f6hItzuzu3rXnyQiL07cBoTy4XWrHc=
