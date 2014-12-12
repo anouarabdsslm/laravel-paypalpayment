@@ -9,4 +9,7 @@ before_script:
   - curl -s http://getcomposer.org/installer | php
   - php composer.phar install --dev
 
-script: phpunit
+env:
+  global:
+  -secure: qu/5u2aHH1gXdlTISscN/AaPTYF9iyczIZ8u2vOULf3VouSIJB4swxUfszIdIDfyhzokxn0z5RkoopYcIgYKlu9m29V7xbRObrUrZWalJzaCuMf5LpEyOsV1VaEhZVSl25V9mcbGJrcw2f6hItzuzu3rXnyQiL07cBoTy4XWrHc=
+script: phpspec
