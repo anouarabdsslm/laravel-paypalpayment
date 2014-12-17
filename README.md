@@ -13,7 +13,7 @@ Install this package through Composer. To your `composer.json` file, add:
 
 ```js
 "require": {
-    "anouar/paypalpayment": "dev-master"
+    "anouar/paypalpayment": "1.*"
 }
 ```
 
