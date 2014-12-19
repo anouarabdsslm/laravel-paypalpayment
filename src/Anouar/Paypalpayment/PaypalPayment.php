@@ -233,7 +233,7 @@ class PaypalPayment{
      */
     public function apiContext($clientId = null, $clientSecret = null, $requestId = null)
     {
-        $credentials = Self::OAuthTokenCredential($clientId, $clientSecret);
+        $credentials = self::OAuthTokenCredential($clientId, $clientSecret);
 
         return new ApiContext($credentials, $requestId);
     }
