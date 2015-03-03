@@ -1,4 +1,11 @@
 
+##Note :
+If you're going to use this package with L4 , make sure to include the laravel 4 version: 
+```js
+"require": {
+    "anouar/paypalpayment": "1.0"
+}
+```
 laravel-paypalpayment
 =====================
 [![Build Status](https://travis-ci.org/xroot/laravel-paypalpayment.svg?branch=master)](https://travis-ci.org/xroot/laravel-paypalpayment)
