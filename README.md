@@ -3,7 +3,7 @@
 If you're going to use this package with L4 , make sure to include the laravel 4 version: 
 ```js
 "require": {
-    "anouar/Paypal": "1.0"
+    "Netshell/Paypal": "1.0"
 }
 ```
 laravel-Paypal
@@ -20,7 +20,7 @@ Install this package through Composer. To your `composer.json` file, add:
 
 ```js
 "require": {
-    "anouar/Paypal": "1.*"
+    "Netshell/Paypal": "1.*"
 }
 ```
 
@@ -32,7 +32,7 @@ Add the service provider to `app/config/app.php`, within the `providers` array.
 'providers' => array(
     // ...
 
-    'Anouar\Paypal\PaypalServiceProvider',
+    'Netshell\Paypal\PaypalServiceProvider',
 )
 ```
 
@@ -42,11 +42,11 @@ Finally, add the alias to `app/config/app.php`, within the `aliases` array.
 'aliases' => array(
     // ...
 
-    'Paypal'   => 'Anouar\Paypal\Facades\Paypal',
+    'Paypal'   => 'Netshell\Paypal\Facades\Paypal',
 )
 ```
 ##Configuration
-Now go to `vendor\anouar\Paypal\src\Anouar\Paypal\sdk_config.ini`
+Now go to `vendor\Netshell\Paypal\src\Netshell\Paypal\sdk_config.ini`
 
 Set your SDK configuration `acct1.ClientId` and `acct1.ClientSecret` , set the `service.EndPoint` to the mode that you want , by default it set to testing mode which is`service.EndPoint="https://api.sandbox.paypal.com"`.If you were going  live , make sure to comment the sandbox mode and uncomment the live mode
 .

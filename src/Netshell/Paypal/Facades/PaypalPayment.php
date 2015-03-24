@@ -1,4 +1,4 @@
-<?php namespace Anouar\Paypal\Facades;
+<?php namespace Netshell\Paypal\Facades;
  
 use Illuminate\Support\Facades\Facade;
  

@@ -1,4 +1,4 @@
-<?php namespace Anouar\Paypal;
+<?php namespace Netshell\Paypal;
 
 use Illuminate\Support\ServiceProvider;
 use PayPal\Api\Address;
@@ -42,7 +42,7 @@ class PaypalServiceProvider extends ServiceProvider {
      */
     public function boot()
     {
-        $this->package('anouar/Paypal');
+        $this->package('Netshell/Paypal');
     }
 
     /**

@@ -1,4 +1,4 @@
-<?php namespace Anouar\Paypal;
+<?php namespace Netshell\Paypal;
 
 use Illuminate\Support\Facades\URL;
 use PayPal\Api\Address;
