@@ -1,5 +1,5 @@
 {
-    "name": "Netshell/Paypal",
+    "name": "netshell/paypal",
     "description": "Laravel-Paypal is simple package help you process direct credit card payments, stored credit card payments and PayPal account payments with your Laravel 5 projects using paypal REST API SDK.",
     "license": "BSD-2-Clause",
     "authors": [
