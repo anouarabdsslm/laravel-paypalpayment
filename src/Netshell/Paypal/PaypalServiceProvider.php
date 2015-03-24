@@ -1,4 +1,4 @@
-<?php namespace Anouar\Paypalpayment;
+<?php namespace Anouar\Paypal;
 
 use Illuminate\Support\ServiceProvider;
 use PayPal\Api\Address;
@@ -26,7 +26,7 @@ use PayPal\Api\ShippingAddress;
 use PayPal\Api\Transaction;
 use PayPal\Api\Transactions;
 
-class PaypalpaymentServiceProvider extends ServiceProvider {
+class PaypalServiceProvider extends ServiceProvider {
 
     /**
      * Indicates if loading of the provider is deferred.
@@ -42,7 +42,7 @@ class PaypalpaymentServiceProvider extends ServiceProvider {
      */
     public function boot()
     {
-        $this->package('anouar/paypalpayment');
+        $this->package('anouar/Paypal');
     }
 
     /**
@@ -52,9 +52,9 @@ class PaypalpaymentServiceProvider extends ServiceProvider {
      */
     public function register()
     {
-        $this->app['paypalpayment'] = $this->app->share(function($app)
+        $this->app['Paypal'] = $this->app->share(function($app)
         {
-            return new PaypalPayment();
+            return new Paypal();
         });
     }
 
@@ -65,7 +65,7 @@ class PaypalpaymentServiceProvider extends ServiceProvider {
      */
     public function provides()
     {
-        return array('paypalpayment');
+        return array('Paypal');
     }
 
 }

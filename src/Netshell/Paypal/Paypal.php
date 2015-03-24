@@ -1,4 +1,4 @@
-<?php namespace Anouar\Paypalpayment;
+<?php namespace Anouar\Paypal;
 
 use Illuminate\Support\Facades\URL;
 use PayPal\Api\Address;
@@ -29,7 +29,7 @@ use PayPal\Core\PPConfigManager;
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
 
-class PaypalPayment{
+class Paypal{
 
 
     /**

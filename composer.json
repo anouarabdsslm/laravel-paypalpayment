@@ -1,11 +1,11 @@
 {
-    "name": "anouar/paypalpayment",
-    "description": "laravel-paypalpayment is simple package help you process direct credit card payments, stored credit card payments and PayPal account payments with your L4 projects using paypal REST API SDK.",
+    "name": "Netshell/Paypal",
+    "description": "Laravel-Paypal is simple package help you process direct credit card payments, stored credit card payments and PayPal account payments with your Laravel 5 projects using paypal REST API SDK.",
     "license": "BSD-2-Clause",
     "authors": [
         {
-            "name": "Anouar Abdessalam",
-            "email": "dtekind@gmail.com"
+            "name": "Boyan Balkanski",
+            "email": "balkanski@outlook.com"
         }
     ],
     "require": {
@@ -13,14 +13,14 @@
         "illuminate/support": "~5.0",
         "ext-curl": "*",
         "ext-json": "*",
-        "paypal/rest-api-sdk-php": "0.15.1"
+        "paypal/rest-api-sdk-php": "1.3.2"
     },
     "require-dev":{
         "phpspec/phpspec": "~2.0"
     },
     "autoload": {
         "psr-0": {
-            "Anouar\\Paypalpayment": "src/"
+            "Netshell\\Paypal": "src/"
         }
     },
     "minimum-stability": "dev"

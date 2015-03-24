@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Anouar\Paypalpayment;
+namespace spec\Anouar\Paypal;
 
 use PayPal\Api\Address;
 use PayPal\Api\Amount;
@@ -31,12 +31,12 @@ use PayPal\Rest\ApiContext;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class PaypalPaymentSpec extends ObjectBehavior
+class PaypalSpec extends ObjectBehavior
 {
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Anouar\Paypalpayment\PaypalPayment');
+        $this->shouldHaveType('Anouar\Paypal\Paypal');
     }
 
     public function it_is_return_address_object()
