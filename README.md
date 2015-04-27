@@ -1,4 +1,11 @@
 
+##Note :
+If you're going to use this package with L4 , make sure to include the laravel 4 version: 
+```js
+"require": {
+    "anouar/paypalpayment": "1.0"
+}
+```
 laravel-paypalpayment
 =====================
 [![Build Status](https://travis-ci.org/xroot/laravel-paypalpayment.svg?branch=master)](https://travis-ci.org/xroot/laravel-paypalpayment)
@@ -13,7 +20,7 @@ Install this package through Composer. To your `composer.json` file, add:
 
 ```js
 "require": {
-    "anouar/paypalpayment": "1.*"
+    "anouar/paypalpayment": "1.0"
 }
 ```
 
@@ -216,8 +223,8 @@ Add the `create()` function to the `PaypalPaymentController` Controller
         $addr->setLine2("Niagara Falls");
         $addr->setCity("Niagara Falls");
         $addr->setState("NY");
-        $addr->setPostal_code("14305");
-        $addr->setCountry_code("US");
+        $addr->setPostalCode("14305");
+        $addr->setCountryCode("US");
         $addr->setPhone("716-298-1822");
 
         // ### CreditCard
@@ -237,7 +244,7 @@ Add the `create()` function to the `PaypalPaymentController` Controller
         // creating or using a tokenized funding instrument)
         // and the `CreditCardDetails`
         $fi = Paypalpayment::fundingInstrument();
-        $fi->setCredit_card($card);
+        $fi->setCreditCard($card);
 
         // ### Payer
         // A resource representing a Payer that funds a payment
