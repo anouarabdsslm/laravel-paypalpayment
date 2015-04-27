@@ -1,4 +1,3 @@
-```
 laravel-paypalpayment
 =====================
 [![Build Status](https://travis-ci.org/xroot/laravel-paypalpayment.svg?branch=master)](https://travis-ci.org/xroot/laravel-paypalpayment)
