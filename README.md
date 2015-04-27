@@ -223,8 +223,8 @@ Add the `create()` function to the `PaypalPaymentController` Controller
         $addr->setLine2("Niagara Falls");
         $addr->setCity("Niagara Falls");
         $addr->setState("NY");
-        $addr->setPostal_code("14305");
-        $addr->setCountry_code("US");
+        $addr->setPostalCode("14305");
+        $addr->setCountryCode("US");
         $addr->setPhone("716-298-1822");
 
         // ### CreditCard
@@ -244,7 +244,7 @@ Add the `create()` function to the `PaypalPaymentController` Controller
         // creating or using a tokenized funding instrument)
         // and the `CreditCardDetails`
         $fi = Paypalpayment::fundingInstrument();
-        $fi->setCredit_card($card);
+        $fi->setCreditCard($card);
 
         // ### Payer
         // A resource representing a Payer that funds a payment
