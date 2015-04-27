@@ -211,17 +211,11 @@ Add the `create()` function to the `PaypalPaymentController` Controller
         // ### Address
         // Base Address object used as shipping or billing
         // address in a payment. [Optional]
-        $addr= Paypalpayment::address();
-        $addr->setLine1("3909 Witmer Road");
-        $addr->setLine2("Niagara Falls");
-        $addr->setCity("Niagara Falls");
-        $addr->setState("NY");
-        $addr->setPostal_code("14305");
-        $addr->setCountry_code("US");
+        $addr = Paypalpayment::Address();
         $addr->setPhone("716-298-1822");
 
         // ### CreditCard
-        $card = Paypalpayment::creditCard();
+        $card = Paypalpayment::CreditCard();
         $card->setType("visa")
             ->setNumber("4758411877817150")
             ->setExpireMonth("05")
@@ -236,18 +230,18 @@ Add the `create()` function to the `PaypalPaymentController` Controller
         // and provided by the facilitator. This is required when
         // creating or using a tokenized funding instrument)
         // and the `CreditCardDetails`
-        $fi = Paypalpayment::fundingInstrument();
-        $fi->setCredit_card($card);
+        $fi = Paypalpayment::FundingInstrument();
+        $fi->setCreditCard($card);
 
         // ### Payer
         // A resource representing a Payer that funds a payment
         // Use the List of `FundingInstrument` and the Payment Method
         // as 'credit_card'
-        $payer = Paypalpayment::payer();
+        $payer = Paypalpayment::Payer();
         $payer->setPaymentMethod("credit_card")
             ->setFundingInstruments(array($fi));
 
-        $item1 = Paypalpayment::item();
+        $item1 = Paypalpayment::Item();
         $item1->setName('Ground Coffee 40 oz')
                 ->setDescription('Ground Coffee 40 oz')
                 ->setCurrency('USD')
@@ -255,7 +249,7 @@ Add the `create()` function to the `PaypalPaymentController` Controller
                 ->setTax(0.3)
                 ->setPrice(7.50);
 
-        $item2 = Paypalpayment::item();
+        $item2 = Paypalpayment::Item();
         $item2->setName('Granola bars')
                 ->setDescription('Granola Bars with Peanuts')
                 ->setCurrency('USD')
@@ -264,18 +258,18 @@ Add the `create()` function to the `PaypalPaymentController` Controller
                 ->setPrice(2);
 
 
-        $itemList = Paypalpayment::itemList();
+        $itemList = Paypalpayment::ItemList();
         $itemList->setItems(array($item1,$item2));
 
 
-        $details = Paypalpayment::details();
+        $details = Paypalpayment::Details();
         $details->setShipping("1.2")
                 ->setTax("1.3")
                 //total of items prices
                 ->setSubtotal("17.5");
 
         //Payment Amount
-        $amount = Paypalpayment::amount();
+        $amount = Paypalpayment::Amount();
         $amount->setCurrency("USD")
                 // the total is $17.8 = (16 + 0.6) * 1 ( of quantity) + 1.2 ( of Shipping).
                 ->setTotal("20")
@@ -287,7 +281,7 @@ Add the `create()` function to the `PaypalPaymentController` Controller
         // is fulfilling it. Transaction is created with
         // a `Payee` and `Amount` types
 
-        $transaction = Paypalpayment::transaction();
+        $transaction = Paypalpayment::Transaction();
         $transaction->setAmount($amount)
             ->setItemList($itemList)
             ->setDescription("Payment description")
@@ -298,7 +292,6 @@ Add the `create()` function to the `PaypalPaymentController` Controller
         // the above types and intent as 'sale'
 
         $payment = Paypalpayment::payment();
-
         $payment->setIntent("sale")
             ->setPayer($payer)
             ->setTransactions(array($transaction));
@@ -326,11 +319,17 @@ Add the `index()` function to the `PaypalPaymentController` Controller
     */
     public function index()
     {
-        echo "<pre>";
+        try {
 
-        $payments = Paypalpayment::getAll(array('count' => 1, 'start_index' => 0), $this->_apiContext);
+            $params = array('count' => 10, 'start_index' => 5);
+            $payments = Paypalpayment::all($params, $this->_apiContext);
 
-        dd($payments);
+            dd($payments);
+
+        } catch (\PPConnectionException $ex) {
+            return  "Exception: " . $ex->getMessage() . PHP_EOL;
+            exit(1);
+        }
     }
 ```
 
@@ -345,9 +344,16 @@ Add the `show()` function to the `PaypalPaymentController` Controller
 
     public function show($payment_id)
     {
-       $payment = Paypalpayment::getById($payment_id,$this->_apiContext);
+        try {
 
-       dd($payment);
+            $payment = Paypalpayment::get($payment_id, $this->_apiContext);
+            dd($payment);
+            
+        } catch (\PPConnectionException $ex) {
+            return  "Exception: " . $ex->getMessage() . PHP_EOL;
+            exit(1);
+        }
+       
     }
 ```
 
