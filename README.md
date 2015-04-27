@@ -257,10 +257,8 @@ Add the `create()` function to the `PaypalPaymentController` Controller
                 ->setTax(0.2)
                 ->setPrice(2);
 
-
         $itemList = Paypalpayment::ItemList();
         $itemList->setItems(array($item1,$item2));
-
 
         $details = Paypalpayment::Details();
         $details->setShipping("1.2")
@@ -297,17 +295,18 @@ Add the `create()` function to the `PaypalPaymentController` Controller
             ->setTransactions(array($transaction));
 
         try {
+            
             // ### Create Payment
             // Create a payment by posting to the APIService
             // using a valid ApiContext
             // The return object contains the status;
             $payment->create($this->_apiContext);
+            dd($payment);
+
         } catch (\PPConnectionException $ex) {
             return  "Exception: " . $ex->getMessage() . PHP_EOL;
             exit(1);
         }
-
-        dd($payment);
     } 
 ```
 ##3-List Payment
@@ -348,7 +347,7 @@ Add the `show()` function to the `PaypalPaymentController` Controller
 
             $payment = Paypalpayment::get($payment_id, $this->_apiContext);
             dd($payment);
-            
+
         } catch (\PPConnectionException $ex) {
             return  "Exception: " . $ex->getMessage() . PHP_EOL;
             exit(1);
