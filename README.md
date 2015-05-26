@@ -366,7 +366,7 @@ Only for Payment with `payment_method` as `"paypal"`
     // create() fuction , this function create payment using "paypal" method
     $paymentId = '';grape it from DB;
     $PayerID = '';grape it from DB;
-    $payment = Paypalpayment::get($paymentId, $this->_apiContext);
+    $payment = Paypalpayment::getById($paymentId, $this->_apiContext);
     
     // PaymentExecution object includes information necessary 
     // to execute a PayPal account payment. 
