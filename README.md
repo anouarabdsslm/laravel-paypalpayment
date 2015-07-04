@@ -1,6 +1,6 @@
 
 ##Note :
-If you're going to use this package with L4 , make sure to include the laravel 4 version: 
+If you're going to use this package with Laravel 4, make sure to include the Laravel 4 version: 
 ```js
 "require": {
     "anouar/paypalpayment": "1.0"
@@ -10,10 +10,11 @@ laravel-paypalpayment
 =====================
 [![Build Status](https://travis-ci.org/xroot/laravel-paypalpayment.svg?branch=master)](https://travis-ci.org/xroot/laravel-paypalpayment)
 
-laravel-paypalpayment is simple package  help you process   direct credit card payments, stored credit card payments and PayPal account payments with your L4 projects using paypal REST API SDK.
+laravel-paypalpayment is a simple package that helps you to process direct credit card payments, stored credit card payments and PayPal account payments with your Laravel 4/5 projects using PayPal REST API SDK.
 
 ##Donation :
 If you want to support us: <a href='https://pledgie.com/campaigns/24666'><img alt='Click here to lend your support to: github and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/24666.png?skin_name=chrome' border='0' ></a>
+
 Installation
 =============
 Install this package through Composer. To your `composer.json` file, add:
@@ -26,7 +27,7 @@ Install this package through Composer. To your `composer.json` file, add:
 
 Next, run `composer update` to download it.
 
-Add the service provider to `app/config/app.php`, within the `providers` array.
+Add the service provider to `config/app.php` (`app/config/app.php` in Laravel 4), within the `providers` array.
 
 ```php
 'providers' => array(
@@ -36,7 +37,7 @@ Add the service provider to `app/config/app.php`, within the `providers` array.
 )
 ```
 
-Finally, add the alias to `app/config/app.php`, within the `aliases` array.
+Finally, add the alias to `config/app.php` (`app/config/app.php` in Laravel 4), within the `aliases` array.
 
 ```php
 'aliases' => array(
@@ -46,10 +47,9 @@ Finally, add the alias to `app/config/app.php`, within the `aliases` array.
 )
 ```
 ##Configuration
-Now go to `vendor\anouar\paypalpayment\src\Anouar\Paypalpayment\sdk_config.ini`
+Now go to `vendor\anouar\paypalpayment\src\Anouar\Paypalpayment\sdk_config.ini`.
 
-Set your SDK configuration `acct1.ClientId` and `acct1.ClientSecret` , set the `service.EndPoint` to the mode that you want , by default it set to testing mode which is`service.EndPoint="https://api.sandbox.paypal.com"`.If you were going  live , make sure to comment the sandbox mode and uncomment the live mode
-.
+Set your SDK configuration `acct1.ClientId` and `acct1.ClientSecret` , set the `service.EndPoint` to the mode that you want , by default it set to testing mode which is`service.EndPoint="https://api.sandbox.paypal.com"`. If you were going live, make sure to comment the sandbox mode and uncomment the live mode.
 
 ```
 ;Account credentials from developer portal
@@ -378,9 +378,10 @@ Only for Payment with `payment_method` as `"paypal"`
     //Execute the payment
     $payment->execute($execution,$this->_apiContext);
 ```
-Go to your `routes.php` file  and register a resourceful route to the controller:` Route::resource('payment', 'PaypalPaymentController');`
+Go to your `routes.php` file  and register a resourceful route to the controller: `Route::resource('payment', 'PaypalPaymentController');`
 
-These examples pick the SDK configuration dynamiccly.If you want to pick your configuration from the sdk_config.ini file make sure to set thus configuration there. 
+These examples pick the SDK configuration dynamically. If you want to pick your configuration from the `sdk_config.ini` file make sure to set thus configuration there. 
+
 Conclusion
 ==========
 I hope this package help someone around -_*
