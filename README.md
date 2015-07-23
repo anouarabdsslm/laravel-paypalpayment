@@ -15,7 +15,7 @@ laravel-paypalpayment is a simple package that helps you to process direct credi
 ##Donation :
 If you want to support us: <a href='https://pledgie.com/campaigns/24666'><img alt='Click here to lend your support to: github and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/24666.png?skin_name=chrome' border='0' ></a>
 
-## <a href='https://www.youtube.com/watch?v=BDeZ-k3cidE'>Watch a Quick Demo</a>
+## <a href='https://youtu.be/q5Xb5r4MUB8'>Watch a Quick Demo</a>
 Installation
 =============
 Install this package through Composer. To your `composer.json` file, add:
