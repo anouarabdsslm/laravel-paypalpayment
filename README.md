@@ -121,7 +121,7 @@ If you do not want to use an ini file or want to pick your configuration dynamic
         // (that ensures idempotency). The SDK generates
         // a request id if you do not pass one explicitly. 
 
-        $this->_apiContext = Paypalpayment::ApiContext($this->_ClientId, $this->_ClientSecret);
+        $this->_apiContext = Paypalpayment::apiContext($this->_ClientId, $this->_ClientSecret);
 
         // Uncomment this step if you want to use per request 
         // dynamic configuration instead of using sdk_config.ini
