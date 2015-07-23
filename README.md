@@ -15,6 +15,7 @@ laravel-paypalpayment is a simple package that helps you to process direct credi
 ##Donation :
 If you want to support us: <a href='https://pledgie.com/campaigns/24666'><img alt='Click here to lend your support to: github and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/24666.png?skin_name=chrome' border='0' ></a>
 
+## <a href='https://www.youtube.com/watch?v=BDeZ-k3cidE'>Watch a Quick Demo</a>
 Installation
 =============
 Install this package through Composer. To your `composer.json` file, add:
@@ -37,7 +38,7 @@ Add the service provider to `config/app.php` (`app/config/app.php` in Laravel 4)
 )
 ```
 
-Finally, add the alias to `config/app.php` (`app/config/app.php` in Laravel 4), within the `aliases` array.
+Then add an alias to `config/app.php` (`app/config/app.php`), within the `aliases` array.
 
 ```php
 'aliases' => array(
@@ -46,6 +47,7 @@ Finally, add the alias to `config/app.php` (`app/config/app.php` in Laravel 4), 
     'Paypalpayment'   => 'Anouar\Paypalpayment\Facades\PaypalPayment',
 )
 ```
+Finaly Pulish the package configuration by running this CMD ```php artisan vendor:publish```
 ##Configuration
 Now go to `vendor\anouar\paypalpayment\src\Anouar\Paypalpayment\sdk_config.ini`.
 
