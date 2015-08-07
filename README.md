@@ -218,7 +218,7 @@ Add the `create()` function to the `PaypalPaymentController` Controller
     */
     public function create()
     {
-        return View::mak('payment.order')
+        return View::make('payment.order');
     }
 
     /*
