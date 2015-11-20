@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\URL;
 use PayPal\Api\Address;
+use PayPal\Api\Agreement;
 use PayPal\Api\Amount;
 use PayPal\Api\Details;
 use PayPal\Api\Authorization;
@@ -16,8 +17,10 @@ use PayPal\Api\Payee;
 use PayPal\Api\Payer;
 use PayPal\Api\PayerInfo;
 use PayPal\Api\Payment;
+use PayPal\Api\PaymentDefinition;
 use PayPal\Api\PaymentExecution;
 use PayPal\Api\PaymentHistory;
+use PayPal\Api\Plan;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\Refund;
 use PayPal\Api\RelatedResources;
@@ -25,11 +28,12 @@ use PayPal\Api\Sale;
 use PayPal\Api\ShippingAddress;
 use PayPal\Api\Transaction;
 use PayPal\Api\Transactions;
-use PayPal\Core\PPConfigManager;
+use PayPal\Core\PayPalConfigManager;
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
 
-class PaypalPayment{
+class PaypalPayment
+{
 
 
     /**
@@ -38,6 +42,14 @@ class PaypalPayment{
     public function address()
     {
         return new Address;
+    }
+
+    /**
+     * @return Paypal\Api\Address
+     */
+    public function agreement()
+    {
+        return new Agreement();
     }
 
     /**
@@ -51,7 +63,7 @@ class PaypalPayment{
     /**
      * @return Paypal\Api\Details
      */
-    public  function details()
+    public function details()
     {
         return new Details;
     }
@@ -59,7 +71,7 @@ class PaypalPayment{
     /**
      * @return Paypal\Api\Authorization
      */
-    public  function authorization()
+    public function authorization()
     {
         return new Authorization;
     }
@@ -67,7 +79,7 @@ class PaypalPayment{
     /**
      * @return Paypal\Api\Capture
      */
-    public  function capture()
+    public function capture()
     {
         return new Capture;
     }
@@ -75,7 +87,7 @@ class PaypalPayment{
     /**
      * @return Paypal\Api\CreditCard
      */
-    public  function creditCard()
+    public function creditCard()
     {
         return new CreditCard;
     }
@@ -83,7 +95,7 @@ class PaypalPayment{
     /**
      * @return Paypal\Api\CreditCardToken
      */
-    public  function creditCardToken()
+    public function creditCardToken()
     {
         return new CreditCardToken;
     }
@@ -91,7 +103,7 @@ class PaypalPayment{
     /**
      * @return Paypal\Api\FundingInstrument
      */
-    public  function fundingInstrument()
+    public function fundingInstrument()
     {
         return new FundingInstrument;
     }
@@ -99,7 +111,7 @@ class PaypalPayment{
     /**
      * @return Paypal\Api\Item
      */
-    public  function item()
+    public function item()
     {
         return new Item;
     }
@@ -107,7 +119,7 @@ class PaypalPayment{
     /**
      * @return Paypal\Api\ItemList
      */
-    public  function itemList()
+    public function itemList()
     {
         return new ItemList;
     }
@@ -115,7 +127,7 @@ class PaypalPayment{
     /**
      * @return Paypal\Api\Links
      */
-    public  function links()
+    public function links()
     {
         return new Links;
     }
@@ -123,7 +135,7 @@ class PaypalPayment{
     /**
      * @return Paypal\Api\Payee
      */
-    public  function payee()
+    public function payee()
     {
         return new Payee;
     }
@@ -131,7 +143,7 @@ class PaypalPayment{
     /**
      * @return Paypal\Api\Payer
      */
-    public  function payer()
+    public function payer()
     {
         return new Payer;
     }
@@ -139,7 +151,7 @@ class PaypalPayment{
     /**
      * @return Paypal\Api\PayerInfo
      */
-    public  function payerInfo()
+    public function payerInfo()
     {
         return new PayerInfo;
     }
@@ -147,15 +159,23 @@ class PaypalPayment{
     /**
      * @return Paypal\Api\Payment
      */
-    public  function payment()
+    public function payment()
     {
         return new Payment;
     }
 
     /**
+     * @return Paypal\Api\PaymentDefinition
+     */
+    public function paymentDefinition()
+    {
+        return new PaymentDefinition;
+    }
+
+    /**
      * @return Paypal\Api\PaymentExecution
      */
-    public  function paymentExecution()
+    public function paymentExecution()
     {
         return new PaymentExecution;
     }
@@ -163,15 +183,23 @@ class PaypalPayment{
     /**
      * @return Paypal\Api\PaymentHistory
      */
-    public  function paymentHistory()
+    public function paymentHistory()
     {
         return new PaymentHistory;
     }
 
     /**
+     * @return Paypal\Api\PaymentHistory
+     */
+    public function plan()
+    {
+        return new Plan;
+    }
+
+    /**
      * @return Paypal\Api\RedirectUrls
      */
-    public  function redirectUrls()
+    public function redirectUrls()
     {
         return new RedirectUrls;
     }
@@ -179,7 +207,7 @@ class PaypalPayment{
     /**
      * @return Paypal\Api\Refund
      */
-    public  function refund()
+    public function refund()
     {
         return new Refund;
     }
@@ -187,7 +215,7 @@ class PaypalPayment{
     /**
      * @return Paypal\Api\RelatedResources
      */
-    public  function relatedResources()
+    public function relatedResources()
     {
         return new RelatedResources;
     }
@@ -195,7 +223,7 @@ class PaypalPayment{
     /**
      * @return Paypal\Api\Sale
      */
-    public  function sale()
+    public function sale()
     {
         return new Sale;
     }
@@ -203,7 +231,7 @@ class PaypalPayment{
     /**
      * @return Paypal\Api\ShippingAddress
      */
-    public  function shippingAddress()
+    public function shippingAddress()
     {
         return new ShippingAddress;
     }
@@ -211,7 +239,7 @@ class PaypalPayment{
     /**
      * @return Paypal\Api\Transactions
      */
-    public  function transactions()
+    public function transactions()
     {
         return new Transactions;
     }
@@ -243,15 +271,15 @@ class PaypalPayment{
      * @param null $ClientSecret
      * @return PayPal/Auth/OAuthTokenCredential
      */
-    public  static function OAuthTokenCredential($ClientId = null, $ClientSecret=null)
+    public static function OAuthTokenCredential($ClientId = null, $ClientSecret = null)
     {
         //define("PP_CONFIG_PATH", __DIR__);
 
-        if(isset($ClientId) && isset($ClientSecret)) {
-          return new OAuthTokenCredential($ClientId, $ClientSecret);
+        if (isset($ClientId) && isset($ClientSecret)) {
+            return new OAuthTokenCredential($ClientId, $ClientSecret);
         }
 
-        $configManager  = PPConfigManager::getInstance();
+        $configManager = PayPalConfigManager::getInstance();
         // $cred is used by samples that include this bootstrap file
         // This piece of code simply demonstrates how you can
         // dynamically pass in a client id/secret instead of using
@@ -266,7 +294,7 @@ class PaypalPayment{
 
         return $cred;
     }
- 
+
     /**
      * Get the base URL
      * @return mixed
