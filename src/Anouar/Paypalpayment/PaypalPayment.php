@@ -7,12 +7,15 @@ use PayPal\Api\Amount;
 use PayPal\Api\Details;
 use PayPal\Api\Authorization;
 use PayPal\Api\Capture;
+use PayPal\Api\ChargeModel;
 use PayPal\Api\CreditCard;
 use PayPal\Api\CreditCardToken;
+use PayPal\Api\Currency;
 use PayPal\Api\FundingInstrument;
 use PayPal\Api\Item;
 use PayPal\Api\ItemList;
 use PayPal\Api\Links;
+use PayPal\Api\MerchantPreferences;
 use PayPal\Api\Payee;
 use PayPal\Api\Payer;
 use PayPal\Api\PayerInfo;
@@ -61,6 +64,14 @@ class PaypalPayment
     }
 
     /**
+     * @return Paypal\Api\Currency
+     */
+    public function currency()
+    {
+        return new Currency();
+    }
+
+    /**
      * @return Paypal\Api\Details
      */
     public function details()
@@ -82,6 +93,14 @@ class PaypalPayment
     public function capture()
     {
         return new Capture;
+    }
+
+    /**
+     * @return Paypal\Api\ChargeModel
+     */
+    public function chargeModel()
+    {
+        return new ChargeModel();
     }
 
     /**
@@ -130,6 +149,14 @@ class PaypalPayment
     public function links()
     {
         return new Links;
+    }
+
+    /**
+     * @return Paypal\Api\Links
+     */
+    public function merchantPreferences()
+    {
+        return new MerchantPreferences();
     }
 
     /**
