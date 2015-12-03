@@ -16,6 +16,8 @@ use PayPal\Api\Item;
 use PayPal\Api\ItemList;
 use PayPal\Api\Links;
 use PayPal\Api\MerchantPreferences;
+use PayPal\Api\Patch;
+use PayPal\Api\PatchRequest;
 use PayPal\Api\Payee;
 use PayPal\Api\Payer;
 use PayPal\Api\PayerInfo;
@@ -157,6 +159,22 @@ class PaypalPayment
     public function merchantPreferences()
     {
         return new MerchantPreferences();
+    }
+
+    /**
+     * @return Paypal\Api\Patch
+     */
+    public function patch()
+    {
+        return new Patch();
+    }
+
+    /**
+     * @return Paypal\Api\PatchRequest
+     */
+    public function patchRequest()
+    {
+        return new PatchRequest();
     }
 
     /**
