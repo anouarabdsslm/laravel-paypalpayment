@@ -229,7 +229,7 @@ class PaypalPayment{
      * @param null $clientId
      * @param null $clientSecret
      * @param null $requestId
-     * @return Paypal\Rest\ApiContext
+     * @return \PayPal\Rest\ApiContext
      */
     public function apiContext($clientId = null, $clientSecret = null, $requestId = null)
     {
