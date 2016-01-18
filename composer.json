@@ -6,6 +6,10 @@
         {
             "name": "Anouar Abdessalam",
             "email": "dtekind@gmail.com"
+        },
+        {
+            "name": "Jordan Lapp",
+            "email": "jordan@jordanlapp.com"
         }
     ],
     "require": {
