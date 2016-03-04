@@ -47,6 +47,7 @@ class PaypalpaymentServiceProvider extends ServiceProvider {
             return new PaypalPayment();
         });
 
+
         $this->publishes([
             __DIR__.'/../../config/paypal_payment.php' => config_path('paypal_payment.php'),
         ]);
