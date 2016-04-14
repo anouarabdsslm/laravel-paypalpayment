@@ -11,6 +11,7 @@ use PayPal\Api\CreditCardToken;
 use PayPal\Api\FundingInstrument;
 use PayPal\Api\Item;
 use PayPal\Api\ItemList;
+use PayPal\Api\InputFields;
 use PayPal\Api\Links;
 use PayPal\Api\Payee;
 use PayPal\Api\Payer;
@@ -25,6 +26,7 @@ use PayPal\Api\Sale;
 use PayPal\Api\ShippingAddress;
 use PayPal\Api\Transaction;
 use PayPal\Api\Transactions;
+use PayPal\Api\WebProfile;
 use PayPal\Core\PayPalConfigManager as PPConfigManager;
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
@@ -110,6 +112,14 @@ class Paypal{
     public  function itemList()
     {
         return new ItemList;
+    }
+
+    /**
+     * @return Paypal\Api\InputItems
+     */
+    public  function inputFields()
+    {
+        return new InputFields;
     }
 
     /**
@@ -224,6 +234,13 @@ class Paypal{
         return new Transaction;
     }
 
+    /**
+     * @return Paypal\Api\WebProfile
+     */
+    public function webProfile()
+    {
+        return new WebProfile;
+    }
 
     /**
      * @param null $clientId
