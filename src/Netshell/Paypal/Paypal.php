@@ -8,6 +8,7 @@ use PayPal\Api\Authorization;
 use PayPal\Api\Capture;
 use PayPal\Api\CreditCard;
 use PayPal\Api\CreditCardToken;
+use PayPal\Api\FlowConfig;
 use PayPal\Api\FundingInstrument;
 use PayPal\Api\Item;
 use PayPal\Api\ItemList;
@@ -19,6 +20,7 @@ use PayPal\Api\PayerInfo;
 use PayPal\Api\Payment;
 use PayPal\Api\PaymentExecution;
 use PayPal\Api\PaymentHistory;
+use PayPal\Api\Presentation;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\Refund;
 use PayPal\Api\RelatedResources;
@@ -97,7 +99,20 @@ class Paypal{
     {
         return new FundingInstrument;
     }
-
+	 /**
+     * @return Paypal\Api\FlowConfig
+     */
+	public  function FlowConfig()
+    {
+        return new FlowConfig;
+    }
+	 /**
+     * @return Paypal\Api\Presentation
+     */
+	public  function Presentation()
+    {
+        return new Presentation;
+    }
     /**
      * @return Paypal\Api\Item
      */
@@ -115,7 +130,7 @@ class Paypal{
     }
 
     /**
-     * @return Paypal\Api\InputItems
+     * @return Paypal\Api\InputFields
      */
     public  function inputFields()
     {
