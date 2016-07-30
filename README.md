@@ -135,3 +135,34 @@ public function getCancel()
 	return view('checkout.cancel');
 }
 ```
+### Customize Paypal payment page
+
+First we need to create a new WebProfile for obtain the id, then in the future we can simply set this id to the payment object.
+
+```php
+public function createWebProfile(){
+
+	$flowConfig = PayPal::FlowConfig();
+	$presentation = PayPal::Presentation();
+	$inputFields = PayPal::InputFields();
+	$webProfile = PayPal::WebProfile();
+	$flowConfig->setLandingPageType("Billing"); //Set the page type
+
+	$presentation->setLogoImage("https://www.example.com/images/logo.jpg")->setBrandName("Example ltd"); //NB: Paypal recommended to use https for the logo's address and the size set to 190x60.
+
+	$inputFields->setAllowNote(true)->setNoShipping(1)->setAddressOverride(0);
+	
+	$webProfile->setName("Example " . uniqid())
+		->setFlowConfig($flowConfig)
+		// Parameters for style and presentation.
+		->setPresentation($presentation)
+		// Parameters for input field customization.
+		->setInputFields($inputFields);
+
+	$createProfileResponse = $webProfile->create($this->_apiContext);
+        
+	return $createProfileResponse->getId(); //The new webprofile's id
+}
+```
+
+Now set the WebProfile's id to the payment object `$payment->setExperienceProfileId("XP-ABCD-EFGH-ILMN-OPQR");`
