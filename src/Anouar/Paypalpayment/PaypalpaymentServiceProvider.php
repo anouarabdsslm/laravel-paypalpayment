@@ -1,32 +1,18 @@
-<?php namespace Anouar\Paypalpayment;
+<?php
+
+namespace Anouar\Paypalpayment;
 
 use Illuminate\Support\ServiceProvider;
-use PayPal\Api\Address;
-use PayPal\Api\Amount;
-use PayPal\Api\Authorization;
-use PayPal\Api\Capture;
-use PayPal\Api\CreditCard;
-use PayPal\Api\CreditCardToken;
-use PayPal\Api\Details;
-use PayPal\Api\FundingInstrument;
-use PayPal\Api\Item;
-use PayPal\Api\ItemList;
-use PayPal\Api\Links;
-use PayPal\Api\Payee;
-use PayPal\Api\Payer;
-use PayPal\Api\PayerInfo;
-use PayPal\Api\Payment;
-use PayPal\Api\PaymentExecution;
-use PayPal\Api\PaymentHistory;
-use PayPal\Api\RedirectUrls;
-use PayPal\Api\Refund;
-use PayPal\Api\RelatedResources;
-use PayPal\Api\Sale;
-use PayPal\Api\ShippingAddress;
-use PayPal\Api\Transaction;
-use PayPal\Api\Transactions;
 
-class PaypalpaymentServiceProvider extends ServiceProvider {
+/**
+ * Class PaypalpaymentServiceProvider
+ *
+ * @package Anouar\Paypalpayment
+ */
+class PaypalpaymentServiceProvider extends ServiceProvider
+{
+
+    const PAYPALPAYMENT = 'paypalpayment';
 
     /**
      * Indicates if loading of the provider is deferred.
@@ -42,14 +28,17 @@ class PaypalpaymentServiceProvider extends ServiceProvider {
      */
     public function register()
     {
-        $this->app['paypalpayment'] = $this->app->share(function($app)
-        {
-            return new PaypalPayment();
-        });
+        $this->app[self::PAYPALPAYMENT] = $this->app->share(
+            function () {
+                return new PaypalPayment();
+            }
+        );
 
-        $this->publishes([
-            __DIR__.'/../../config/paypal_payment.php' => config_path('paypal_payment.php'),
-        ]);
+        $this->publishes(
+            [
+                __DIR__ . '/../../config/paypal_payment.php' => config_path('paypal_payment.php'),
+            ]
+        );
     }
 
     /**
@@ -59,7 +48,6 @@ class PaypalpaymentServiceProvider extends ServiceProvider {
      */
     public function provides()
     {
-        return array('paypalpayment');
+        return [self::PAYPALPAYMENT];
     }
-
 }

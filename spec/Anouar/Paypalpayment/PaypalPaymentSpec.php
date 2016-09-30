@@ -2,6 +2,7 @@
 
 namespace spec\Anouar\Paypalpayment;
 
+use Anouar\Paypalpayment\PaypalPayment;
 use PayPal\Api\Address;
 use PayPal\Api\Amount;
 use PayPal\Api\Authorization;
@@ -26,17 +27,20 @@ use PayPal\Api\Sale;
 use PayPal\Api\ShippingAddress;
 use PayPal\Api\Transaction;
 use PayPal\Api\Transactions;
-use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Rest\ApiContext;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
+/**
+ * Class PaypalPaymentSpec
+ *
+ * @package spec\Anouar\Paypalpayment
+ */
 class PaypalPaymentSpec extends ObjectBehavior
 {
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
-        $this->shouldHaveType('Anouar\Paypalpayment\PaypalPayment');
+        $this->shouldHaveType(PaypalPayment::class);
     }
 
     public function it_is_return_address_object()
@@ -63,7 +67,8 @@ class PaypalPaymentSpec extends ObjectBehavior
     {
         $this->capture()->shouldBeAnInstanceOf(new Capture);
     }
-    public  function it_is_return_creditCard_object()
+
+    public function it_is_return_creditCard_object()
     {
         $this->creditCard()->shouldBeAnInstanceOf(new CreditCard);
     }
@@ -93,7 +98,7 @@ class PaypalPaymentSpec extends ObjectBehavior
         $this->links()->shouldBeAnInstanceOf(new Links);
     }
 
-    public  function it_is_return_payee_object()
+    public function it_is_return_payee_object()
     {
         $this->payee()->shouldBeAnInstanceOf(new Payee);
     }
@@ -108,62 +113,61 @@ class PaypalPaymentSpec extends ObjectBehavior
         $this->payerInfo()->shouldBeAnInstanceOf(new PayerInfo);
     }
 
-    public  function its_is_return_Payment()
+    public function its_is_return_Payment()
     {
         $this->payment()->shouldBeAnInstanceOf(new Payment);
     }
 
-    public  function its_is_return_PaymentExecution()
+    public function its_is_return_PaymentExecution()
     {
         $this->paymentExecution()->shouldBeAnInstanceOf(new PaymentExecution);
     }
 
-    public  function its_is_return_PaymentHistory()
+    public function its_is_return_PaymentHistory()
     {
         $this->paymentHistory()->shouldBeAnInstanceOf(new PaymentHistory);
     }
 
-    public  function its_is_return_RedirectUrls()
+    public function its_is_return_RedirectUrls()
     {
         $this->redirectUrls()->shouldBeAnInstanceOf(new RedirectUrls);
     }
 
-    public  function its_is_return_Refund()
+    public function its_is_return_Refund()
     {
         $this->refund()->shouldBeAnInstanceOf(new Refund);
     }
 
-    public  function its_is_return_Resource()
+    public function its_is_return_Resource()
     {
         $this->relatedResources()->shouldBeAnInstanceOf(new RelatedResources);
     }
 
-    public  function its_is_return_Sale()
+    public function its_is_return_Sale()
     {
         $this->sale()->shouldBeAnInstanceOf(new Sale);
     }
 
-    public  function its_is_return_ShippingAddress()
+    public function its_is_return_ShippingAddress()
     {
         $this->shippingAddress()->shouldBeAnInstanceOf(new ShippingAddress);
     }
 
-    public  function its_is_return_Transaction()
+    public function its_is_return_Transaction()
     {
         $this->transaction()->shouldBeAnInstanceOf(new Transaction);
     }
 
-    public  function its_is_return_Transactions()
+    public function its_is_return_Transactions()
     {
         $this->transactions()->shouldBeAnInstanceOf(new Transactions);
     }
 
-
-    public  function its_set_ApiContext_details()
+    public function its_set_ApiContext_details()
     {
         $credential = $this::OAuthTokenCredential("clientId", "clientSecret");
 
-        $apiContext = new ApiContext($credential,35);
+        $apiContext = new ApiContext($credential, 35);
 
         $this->apiContext("clientId", "clientSecret", 35)->shouldBeAnInstanceOf($apiContext);
     }
