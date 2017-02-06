@@ -25,7 +25,7 @@ use PayPal\Api\Sale;
 use PayPal\Api\ShippingAddress;
 use PayPal\Api\Transaction;
 use PayPal\Api\Transactions;
-use PayPal\Core\PPConfigManager;
+use PayPal\Core\PayPalConfigManager;
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
 
@@ -251,7 +251,7 @@ class PaypalPayment{
           return new OAuthTokenCredential($ClientId, $ClientSecret);
         }
 
-        $configManager  = PPConfigManager::getInstance();
+        $configManager  = PayPalConfigManager::getInstance();
         // $cred is used by samples that include this bootstrap file
         // This piece of code simply demonstrates how you can
         // dynamically pass in a client id/secret instead of using
