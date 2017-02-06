@@ -245,7 +245,7 @@ class PaypalPayment{
      */
     public  static function OAuthTokenCredential($ClientId = null, $ClientSecret=null)
     {
-        //define("PP_CONFIG_PATH", __DIR__);
+        define("PP_CONFIG_PATH", __DIR__);
 
         if(isset($ClientId) && isset($ClientSecret)) {
           return new OAuthTokenCredential($ClientId, $ClientSecret);
