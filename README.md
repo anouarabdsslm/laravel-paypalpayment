@@ -47,7 +47,10 @@ Then add an alias to `config/app.php` (`app/config/app.php`), within the `aliase
     'Paypalpayment'   => 'Anouar\Paypalpayment\Facades\PaypalPayment',
 )
 ```
-Finaly Pulish the package configuration by running this CMD ```php artisan vendor:publish```
+Finaly Pulish the package configuration by running this CMD 
+    
+    php artisan vendor:publish --provider="Anouar\Paypalpayment\PaypalpaymentServiceProvider"
+
 ##Configuration
 Now go to `vendor\anouar\paypalpayment\src\Anouar\Paypalpayment\sdk_config.ini`.
 
@@ -177,7 +180,11 @@ class PaypalPaymentController extends BaseController {
 }
 ```
 
-If you want to use the Laravel config file: The first step is to publish the config with `artisan vendor:publish`. This will create the config file `storage/paypal_payment.php` (`app/config/paypal_payment.php` in Laravel 4). Configurate it, then replace the `setConfig()` method call (see above) with:
+If you want to use the Laravel config file: The first step is to publish the config with 
+   
+    php artisan vendor:publish --provider="Anouar\Paypalpayment\PaypalpaymentServiceProvider"
+
+This will create the config file `storage/paypal_payment.php` (`app/config/paypal_payment.php` in Laravel 4). Configurate it, then replace the `setConfig()` method call (see above) with:
 
 ```
 $config = config('paypal_payment'); // Get all config items as multi dimensional array
