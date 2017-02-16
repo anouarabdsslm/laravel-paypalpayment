@@ -3,8 +3,8 @@
 return array(
 	# Account credentials from developer portal
 	'Account' => array(
-		//'ClientId' => 'AVJx0RArQzkCCsWC0evZi1SsoO4gxjDkkULQBdmPNBZ4fc14AROUq-etMEY',
-		//'ClientSecret' => 'EH5F0BAxqonVnP8M4a0c6ezUHq-UT-CWfGciPNQdUlTpWPkNyuS6eDN-tpA',
+		'ClientId' => env('PAYPAL_CLIENT_ID', ''),
+		'ClientSecret' => env('PAYPAL_CLIENT_SECRET', ''),
 	),
 
 	# Connection Information
