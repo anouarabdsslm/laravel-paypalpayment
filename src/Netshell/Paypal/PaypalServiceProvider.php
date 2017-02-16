@@ -43,8 +43,7 @@ class PaypalServiceProvider extends ServiceProvider {
      */
     public function register()
     {
-        $this->app['Paypal'] = $this->app->share(function($app)
-        {
+        $this->app->singleton('Paypal', function($app) {
             return new Paypal();
         });
     }
