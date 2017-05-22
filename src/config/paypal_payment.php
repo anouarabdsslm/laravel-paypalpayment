@@ -37,4 +37,7 @@ return array(
 		# decreases as you proceed towards ERROR
 		//'LogLevel' => 'FINE',
 	),
+
+	# Define your application mode here
+	'mode' => 'sandbox'
 );

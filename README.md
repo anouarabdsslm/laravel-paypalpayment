@@ -52,49 +52,7 @@ Finaly Pulish the package configuration by running this CMD
     php artisan vendor:publish --provider="Anouar\Paypalpayment\PaypalpaymentServiceProvider"
 
 ##Configuration
-Now go to `vendor\anouar\paypalpayment\src\Anouar\Paypalpayment\sdk_config.ini`.
-
-Set your SDK configuration `acct1.ClientId` and `acct1.ClientSecret` , set the `service.EndPoint` to the mode that you want , by default it set to testing mode which is`service.EndPoint="https://api.sandbox.paypal.com"`. If you were going live, make sure to comment the sandbox mode and uncomment the live mode.
-
-```
-;Account credentials from developer portal
-[Account]
-acct1.ClientId =AVJx0RArQzkCCsWC0evZi1SsoO4gxjDkkULQBdmPNBZ4fc14AROUq-etMEY
-acct1.ClientSecret =EH5F0BAxqonVnP8M4a0c6ezUHq-UT-CWfGciPNQdUlTpWPkNyuS6eDN-tpA
-
-
-;Connection Information
-[Http]
-http.ConnectionTimeOut = 30
-http.Retry = 1
-;http.Proxy=http://[username:password]@hostname[:port][/path]
-
-
-;Service Configuration
-[Service]
-service.EndPoint="https://api.sandbox.paypal.com"
-; Uncomment this line for integrating with the live endpoint 
-; service.EndPoint="https://api.paypal.com"
-
-
-;Logging Information
-[Log]
-
-log.LogEnabled=true
-
-# When using a relative path, the log file is created
-# relative to the .php file that is the entry point
-# for this request. You can also provide an absolute
-# path here
-log.FileName=../PayPal.log
-
-# Logging level can be one of FINE, INFO, WARN or ERROR
-# Logging is most verbose in the 'FINE' level and
-# decreases as you proceed towards ERROR
-log.LogLevel=FINE
-```
-
-If you do not want to use an ini file or want to pick your configuration dynamically, you can use the `$apiContext->setConfig()` method to pass in the configuration.
+Use the `$apiContext->setConfig()` method to pass in the configuration.
 ```php
     /**
      * object to authenticate the call.
@@ -102,21 +60,6 @@ If you do not want to use an ini file or want to pick your configuration dynamic
      */
     private $_apiContext;
 
-    /**
-     * Set the ClientId and the ClientSecret.
-     * @param 
-     *string $_ClientId
-     *string $_ClientSecret
-     */
-    private $_ClientId='AVJx0RArQzkCCsWC0evZi1SsoO4gxjDkkULQBdmPNBZT4fc14AROUq-etMEY';
-    private $_ClientSecret='EH5F0BAxqonVnP8M4a0c6ezUHq-UT-CWfGciPNQOdUlTpWPkNyuS6eDN-tpA';
-
-    /*
-     *   These construct set the SDK configuration dynamiclly, 
-     *   If you want to pick your configuration from the sdk_config.ini file
-     *   make sure to update you configuration there then grape the credentials using this code :
-     *   $this->_cred= Paypalpayment::OAuthTokenCredential();
-    */
     public function __construct()
     {
 
@@ -149,21 +92,6 @@ class PaypalPaymentController extends BaseController {
      */
     private $_apiContext;
 
-    /**
-     * Set the ClientId and the ClientSecret.
-     * @param
-     *string $_ClientId
-     *string $_ClientSecret
-     */
-    private $_ClientId = 'AVJx0RArQzkCCsWC0evZi1SsoO4gxjDkkULQBdmPNBZT4fc14AROUq-etMEU';
-    private $_ClientSecret='EH5F0BAxqonVnP8M4a0c6ezUHq-UT-CWfGciPNQOdUlTpWPkNyuS6eDN-tpB';
-
-    /*
-     *   These construct set the SDK configuration dynamiclly,
-     *   If you want to pick your configuration from the sdk_config.ini file
-     *   make sure to update you configuration there then grape the credentials using this code :
-     *   $this->_cred= Paypalpayment::OAuthTokenCredential();
-    */
     public function __construct()
     {
 
@@ -173,7 +101,7 @@ class PaypalPaymentController extends BaseController {
         // (that ensures idempotency). The SDK generates
         // a request id if you do not pass one explicitly.
 
-        $this->_apiContext = Paypalpayment::ApiContext($this->_ClientId, $this->_ClientSecret);
+        $this->_apiContext = Paypalpayment::ApiContext(config('paypal_payment.Account.ClientId'), config('paypal_payment.Account.ClientSecret'));
 
     }
      
@@ -484,8 +412,6 @@ Only for Payment with `payment_method` as `"paypal"`
     $payment->execute($execution,$this->_apiContext);
 ```
 Go to your `routes.php` file  and register a resourceful route to the controller: `Route::resource('payment', 'PaypalPaymentController');`
-
-These examples pick the SDK configuration dynamically. If you want to pick your configuration from the `sdk_config.ini` file make sure to set thus configuration there. 
 
 Conclusion
 ==========
