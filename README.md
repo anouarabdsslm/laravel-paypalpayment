@@ -12,7 +12,7 @@ laravel-paypalpayment
 
 laravel-paypalpayment is a simple package that helps you to process direct credit card payments, stored credit card payments and PayPal account payments with your Laravel 4/5 projects using PayPal REST API SDK.
 
-##Donation :
+## Donation :
 If you want to support us: <a href='https://pledgie.com/campaigns/24666'><img alt='Click here to lend your support to: github and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/24666.png?skin_name=chrome' border='0' ></a>
 
 ## <a href='https://youtu.be/q5Xb5r4MUB8'>Watch a Quick Demo</a>
@@ -51,7 +51,7 @@ Finaly Pulish the package configuration by running this CMD
     
     php artisan vendor:publish --provider="Anouar\Paypalpayment\PaypalpaymentServiceProvider"
 
-##Configuration
+## Configuration
 Use the `$apiContext->setConfig()` method to pass in the configuration.
 ```php
     /**
@@ -80,7 +80,7 @@ That's it !!!!!
 Example Code
 ============
 
-##1-Initiate The Configuration
+## 1-Initiate The Configuration
 Create new controller `PaypalPaymentController` and initiate the configuration :
 ```php
 use Paypalpayment;
@@ -103,7 +103,7 @@ class PaypalPaymentController extends BaseController {
 ```
 
 
-##2-Create Payment 
+## 2-Create Payment 
 #Credit card payment
 Add the `create()` function to the `PaypalPaymentController` Controller 
 
@@ -232,7 +232,7 @@ Add the `create()` function to the `PaypalPaymentController` Controller
     } 
 ```
 
-##3-List Payment
+## 3-List Payment
 Add the `index()` function to the `PaypalPaymentController` Controller 
 ```php
     /*
@@ -249,7 +249,7 @@ Add the `index()` function to the `PaypalPaymentController` Controller
     }
 ```
 
-##4-Get Payment details
+## 4-Get Payment details
 Add the `show()` function to the `PaypalPaymentController` Controller 
 ```php
     /*
@@ -266,7 +266,7 @@ Add the `show()` function to the `PaypalPaymentController` Controller
     }
 ```
 
-##5-Execute Payment
+## 5-Execute Payment
 Only for Payment with `payment_method` as `"paypal"`
 ```php
     // Get the payment Object by passing paymentId
