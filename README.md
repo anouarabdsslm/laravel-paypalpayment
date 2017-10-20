@@ -1,5 +1,5 @@
 
-##Note :
+## Note :
 If you're going to use this package with Laravel 4, make sure to include the Laravel 4 version: 
 ```js
 "require": {
