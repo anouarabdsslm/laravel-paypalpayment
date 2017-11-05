@@ -1,4 +1,5 @@
-<?php namespace Anouar\Paypalpayment;
+<?php
+namespace Anouar\Paypalpayment;
 
 use Illuminate\Support\Facades\URL;
 use PayPal\Api\Address;
@@ -25,13 +26,17 @@ use PayPal\Api\Sale;
 use PayPal\Api\ShippingAddress;
 use PayPal\Api\Transaction;
 use PayPal\Api\Transactions;
-use PayPal\Core\PayPalConfigManager;
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
 
 class PaypalPayment
 {
+    protected $config;
 
+    public function __construct(array $config)
+    {
+        $this->config = $config;
+    }
 
     /**
      * @return \PayPal\Api\Address
@@ -234,37 +239,35 @@ class PaypalPayment
      */
     public function apiContext($clientId = null, $clientSecret = null, $requestId = null)
     {
-        $credentials = self::OAuthTokenCredential($clientId, $clientSecret);
+        if (!is_null($clientId)) {
+            $this->config['account']['client_id'] = $clientId;
+        }
 
-        return new ApiContext($credentials, $requestId);
+        if (!is_null($clientSecret)) {
+            $this->config['account']['client_secret'] = $clientSecret;
+        }
+
+        $apiContext = new ApiContext($this->oAuthTokenCredential(), $requestId);
+
+        $apiContext->setConfig([
+            'mode' => $this->config['mode'],
+            'http.ConnectionTimeOut' => $this->config['http']['connection_time_out'],
+            'log.LogEnabled' => $this->config['log']['log_enabled'],
+            'log.FileName' => $this->config['log']['file_name'],
+            'log.LogLevel' => $this->config['log']['log_level']
+        ]);
+
+        return $apiContext;
     }
 
     /**
-     * @param null $ClientId
-     * @param null $ClientSecret
+     * @param null $clientId
+     * @param null $clientSecret
      * @return PayPal/Auth/OAuthTokenCredential
      */
-    public static function OAuthTokenCredential($ClientId = null, $ClientSecret=null)
+    public function oAuthTokenCredential()
     {
-        if (isset($ClientId) && isset($ClientSecret)) {
-            return new OAuthTokenCredential($ClientId, $ClientSecret);
-        }
-
-        $configManager  = PayPalConfigManager::getInstance();
-        // $cred is used by samples that include this bootstrap file
-        // This piece of code simply demonstrates how you can
-        // dynamically pass in a client id/secret instead of using
-        // the config file. If you do not need a way to pass
-        // in credentials dynamically, you can skip the
-        // <Resource>::setCredential($cred) calls that
-        // you see in the samples.
-
-        $cred = new OAuthTokenCredential(
-            $configManager->get('acct1.ClientId'),
-            $configManager->get('acct1.ClientSecret')
-        );
-
-        return $cred;
+        return new OAuthTokenCredential($this->config['account']['client_id'], $this->config['account']['client_secret']);
     }
 
     /**

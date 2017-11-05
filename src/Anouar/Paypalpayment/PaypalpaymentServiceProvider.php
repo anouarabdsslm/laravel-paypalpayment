@@ -1,32 +1,9 @@
 <?php namespace Anouar\Paypalpayment;
 
 use Illuminate\Support\ServiceProvider;
-use PayPal\Api\Address;
-use PayPal\Api\Amount;
-use PayPal\Api\Authorization;
-use PayPal\Api\Capture;
-use PayPal\Api\CreditCard;
-use PayPal\Api\CreditCardToken;
-use PayPal\Api\Details;
-use PayPal\Api\FundingInstrument;
-use PayPal\Api\Item;
-use PayPal\Api\ItemList;
-use PayPal\Api\Links;
-use PayPal\Api\Payee;
-use PayPal\Api\Payer;
-use PayPal\Api\PayerInfo;
-use PayPal\Api\Payment;
-use PayPal\Api\PaymentExecution;
-use PayPal\Api\PaymentHistory;
-use PayPal\Api\RedirectUrls;
-use PayPal\Api\Refund;
-use PayPal\Api\RelatedResources;
-use PayPal\Api\Sale;
-use PayPal\Api\ShippingAddress;
-use PayPal\Api\Transaction;
-use PayPal\Api\Transactions;
 
-class PaypalpaymentServiceProvider extends ServiceProvider {
+class PaypalpaymentServiceProvider extends ServiceProvider
+{
 
     /**
      * Indicates if loading of the provider is deferred.
@@ -42,9 +19,27 @@ class PaypalpaymentServiceProvider extends ServiceProvider {
      */
     public function register()
     {
-        $this->app->singleton('paypalpayment', function($app)
-        {
-            return new PaypalPayment();
+        $this->app->singleton('paypalpayment', function ($app) {
+            $config = [
+                'mode' => config('paypal_payment.mode'),
+
+                'account' => [
+                    'client_id' => config('paypal_payment.account.client_id'),
+                    'client_secret' => config('paypal_payment.account.client_secret'),
+                ],
+
+                'http' => [
+                    'connection_time_out' => config('paypal_payment.http.connection_time_out'),
+                ],
+
+                'log' => [
+                    'log_enabled' => config('paypal_payment.log.log_enabled'),
+                    'file_name' => config('paypal_payment.log.file_name'),
+                    'log_level' => config('paypal_payment.log.log_level'),
+                ],
+            ];
+
+            return new PaypalPayment($config);
         });
 
         $this->publishes([
@@ -59,7 +54,6 @@ class PaypalpaymentServiceProvider extends ServiceProvider {
      */
     public function provides()
     {
-        return array('paypalpayment');
+        return ['paypalpayment'];
     }
-
 }
