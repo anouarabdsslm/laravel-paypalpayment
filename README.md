@@ -1,6 +1,6 @@
 
 ## Note :
-If you're going to use this package with Laravel 4, make sure to include the Laravel 4 version: 
+If you're going to use this package with Laravel 4, make sure to require the Laravel 4 branch: 
 ```js
 "require": {
     "anouar/paypalpayment": "dev-l4"
@@ -22,13 +22,13 @@ Install this package through Composer. To your `composer.json` file:
 
 ```js
 "require": {
-    "anouar/paypalpayment": "~2.0"
+    "anouar/paypalpayment": ">=2.1"
 }
 ```
 
-Next, run `composer update` to download it.
+Next, run `composer update`.
 
-Add the service provider to `config/app.php` (`app/config/app.php` in Laravel 4), within the `providers` array.
+Add the service provider to `config/app.php` (`app/config/app.php` for Laravel 4), in the `providers` array.
 
 ```php
 'providers' => array(
@@ -38,7 +38,7 @@ Add the service provider to `config/app.php` (`app/config/app.php` in Laravel 4)
 )
 ```
 
-Then add an alias to `config/app.php` (`app/config/app.php`), within the `aliases` array.
+Then add an alias under `aliases` array.
 
 ```php
 'aliases' => array(
@@ -52,87 +52,37 @@ Finaly Pulish the package configuration by running this CMD
     php artisan vendor:publish --provider="Anouar\Paypalpayment\PaypalpaymentServiceProvider"
 
 ## Configuration
-Use the `$apiContext->setConfig()` method to pass in the configuration.
-```php
-    /**
-     * object to authenticate the call.
-     * @param object $_apiContext
-     */
-    private $_apiContext;
+Under `config/paypal_payment.php` configuration file set your paypal `client_id` and `client_secert` keys
 
-    public function __construct()
-    {
 
-        // ### Api Context
-        // Pass in a `ApiContext` object to authenticate 
-        // the call. You can also send a unique request id 
-        // (that ensures idempotency). The SDK generates
-        // a request id if you do not pass one explicitly. 
-
-        $this->_apiContext = Paypalpayment::apiContext($this->_ClientId, $this->_ClientSecret);
-
-    }
-
-```
-That's it !!!!!
-==============
-
-Example Code
+Samples
 ============
+## Note: If you are not fan of using facade calls, you can resove the paypal payment service like so `app('paypalpayment')` then assign it to a property.
 
-## 1-Initiate The Configuration
-Create new controller `PaypalPaymentController` and initiate the configuration :
+## 1-Using credit card as paypent method
+
+Create new controller `PaypalPaymentController`:
 ```php
 use Paypalpayment;
 class PaypalPaymentController extends BaseController {
 
-    /**
-     * object to authenticate the call.
-     * @param object $_apiContext
-     */
-    private $_apiContext;
-
-    public function __construct()
-    {
-
-        $this->_apiContext = Paypalpayment::ApiContext(config('paypal_payment.Account.ClientId'), config('paypal_payment.Account.ClientSecret'));
-
-    }
-     
-}
-```
-
-
-## 2-Create Payment 
-#Credit card payment
-Add the `create()` function to the `PaypalPaymentController` Controller 
-
-```php
-
-    /*
-    * Display form to process payment using credit card
-    */
-    public function create()
-    {
-        return View::make('payment.order');
-    }
-
     /*
     * Process payment using credit card
     */
-    public function store()
+    public function paywithCreditCard()
     {
         // ### Address
         // Base Address object used as shipping or billing
         // address in a payment. [Optional]
-        $addr= Paypalpayment::address();
-        $addr->setLine1("3909 Witmer Road");
-        $addr->setLine2("Niagara Falls");
-        $addr->setCity("Niagara Falls");
-        $addr->setState("NY");
-        $addr->setPostalCode("14305");
-        $addr->setCountryCode("US");
-        $addr->setPhone("716-298-1822");
+        $shippingAddress = Paypalpayment::shippingAddress();
+        $shippingAddress->setLine1("3909 Witmer Road")
+            ->setLine2("Niagara Falls")
+            ->setCity("Niagara Falls")
+            ->setState("NY")
+            ->setPostalCode("14305")
+            ->setCountryCode("US")
+            ->setPhone("716-298-1822")
+            ->setRecipientName("Jhone");
 
         // ### CreditCard
         $card = Paypalpayment::creditCard();
@@ -159,7 +109,7 @@ Add the `create()` function to the `PaypalPaymentController` Controller
         // as 'credit_card'
         $payer = Paypalpayment::payer();
         $payer->setPaymentMethod("credit_card")
-            ->setFundingInstruments(array($fi));
+            ->setFundingInstruments([$fi]);
 
         $item1 = Paypalpayment::item();
         $item1->setName('Ground Coffee 40 oz')
@@ -179,7 +129,8 @@ Add the `create()` function to the `PaypalPaymentController` Controller
 
 
         $itemList = Paypalpayment::itemList();
-        $itemList->setItems(array($item1,$item2));
+        $itemList->setItems([$item1,$item2])
+            ->setShippingAddress($shippingAddress);
 
 
         $details = Paypalpayment::details();
@@ -215,21 +166,128 @@ Add the `create()` function to the `PaypalPaymentController` Controller
 
         $payment->setIntent("sale")
             ->setPayer($payer)
-            ->setTransactions(array($transaction));
+            ->setTransactions([$transaction]);
 
         try {
             // ### Create Payment
             // Create a payment by posting to the APIService
             // using a valid ApiContext
             // The return object contains the status;
-            $payment->create($this->_apiContext);
+            $payment->create(Paypalpayment::apiContext());
         } catch (\PPConnectionException $ex) {
-            return  "Exception: " . $ex->getMessage() . PHP_EOL;
-            exit(1);
+            return response()->json(["error" => $ex->getMessage()], 400);
         }
 
-        dd($payment);
-    } 
+        return response()->json([$payment->toArray()], 200);
+    }
+     
+}
+```
+
+
+## 2-Using Express Checkout as payment method
+
+```php
+
+    /*
+    * Process payment with express checkout
+    */
+    public function paywithPaypal()
+    {
+        // ### Address
+        // Base Address object used as shipping or billing
+        // address in a payment. [Optional]
+        $shippingAddress= Paypalpayment::shippingAddress();
+        $shippingAddress->setLine1("3909 Witmer Road")
+            ->setLine2("Niagara Falls")
+            ->setCity("Niagara Falls")
+            ->setState("NY")
+            ->setPostalCode("14305")
+            ->setCountryCode("US")
+            ->setPhone("716-298-1822")
+            ->setRecipientName("Jhone");
+
+        // ### Payer
+        // A resource representing a Payer that funds a payment
+        // Use the List of `FundingInstrument` and the Payment Method
+        // as 'credit_card'
+        $payer = Paypalpayment::payer();
+        $payer->setPaymentMethod("paypal");
+
+        $item1 = Paypalpayment::item();
+        $item1->setName('Ground Coffee 40 oz')
+                ->setDescription('Ground Coffee 40 oz')
+                ->setCurrency('USD')
+                ->setQuantity(1)
+                ->setTax(0.3)
+                ->setPrice(7.50);
+
+        $item2 = Paypalpayment::item();
+        $item2->setName('Granola bars')
+                ->setDescription('Granola Bars with Peanuts')
+                ->setCurrency('USD')
+                ->setQuantity(5)
+                ->setTax(0.2)
+                ->setPrice(2);
+
+
+        $itemList = Paypalpayment::itemList();
+        $itemList->setItems([$item1,$item2])
+            ->setShippingAddress($shippingAddress);
+
+
+        $details = Paypalpayment::details();
+        $details->setShipping("1.2")
+                ->setTax("1.3")
+                //total of items prices
+                ->setSubtotal("17.5");
+
+        //Payment Amount
+        $amount = Paypalpayment::amount();
+        $amount->setCurrency("USD")
+                // the total is $17.8 = (16 + 0.6) * 1 ( of quantity) + 1.2 ( of Shipping).
+                ->setTotal("20")
+                ->setDetails($details);
+
+        // ### Transaction
+        // A transaction defines the contract of a
+        // payment - what is the payment for and who
+        // is fulfilling it. Transaction is created with
+        // a `Payee` and `Amount` types
+
+        $transaction = Paypalpayment::transaction();
+        $transaction->setAmount($amount)
+            ->setItemList($itemList)
+            ->setDescription("Payment description")
+            ->setInvoiceNumber(uniqid());
+
+        // ### Payment
+        // A Payment Resource; create one using
+        // the above types and intent as 'sale'
+
+        $redirectUrls = Paypalpayment::redirectUrls();
+        $redirectUrls->setReturnUrl(url("/payments/success"))
+            ->setCancelUrl(url("/payments/fails"));
+
+        $payment = Paypalpayment::payment();
+
+        $payment->setIntent("sale")
+            ->setPayer($payer)
+            ->setRedirectUrls($redirectUrls)
+            ->setTransactions([$transaction]);
+
+        try {
+            // ### Create Payment
+            // Create a payment by posting to the APIService
+            // using a valid ApiContext
+            // The return object contains the status;
+            $payment->create(Paypalpayment::apiContext());
+        } catch (\PPConnectionException $ex) {
+            return response()->json(["error" => $ex->getMessage()], 400);
+        }
+
+        return response()->json([$payment->toArray(), 'approval_url' => $payment->getApprovalLink()], 200);
+    }
 ```
 
 ## 3-List Payment
@@ -241,11 +299,11 @@ Add the `index()` function to the `PaypalPaymentController` Controller
     */
     public function index()
     {
-        echo "<pre>";
 
-        $payments = Paypalpayment::getAll(array('count' => 1, 'start_index' => 0), $this->_apiContext);
+        $payments = Paypalpayment::getAll(['count' => 1, 'start_index' => 0], Paypalpayment::apiContext());
+        
+        return response()->json([$payments->toArray()], 200);
 
-        dd($payments);
     }
 ```
 
@@ -260,34 +318,13 @@ Add the `show()` function to the `PaypalPaymentController` Controller
 
     public function show($payment_id)
     {
-       $payment = Paypalpayment::getById($payment_id,$this->_apiContext);
-
-       dd($payment);
+       $payment = Paypalpayment::getById($payment_id, Paypalpayment::apiContext());
+        
+        return response()->json([$payment->toArray()], 200);
     }
 ```
-
-## 5-Execute Payment
-Only for Payment with `payment_method` as `"paypal"`
-```php
-    // Get the payment Object by passing paymentId
-    // payment id and payer ID was previously stored in database in
-    // create() fuction , this function create payment using "paypal" method
-    $paymentId = '';grape it from DB;
-    $PayerID = '';grape it from DB;
-    $payment = Paypalpayment::getById($paymentId, $this->_apiContext);
-    
-    // PaymentExecution object includes information necessary 
-    // to execute a PayPal account payment. 
-    // The payer_id is added to the request query parameters
-    // when the user is redirected from paypal back to your site
-    $execution = Paypalpayment::PaymentExecution();
-    $execution->setPayerId($PayerID);
-    
-    //Execute the payment
-    $payment->execute($execution,$this->_apiContext);
-```
-Go to your `routes.php` file  and register a resourceful route to the controller: `Route::resource('payment', 'PaypalPaymentController');`
+Under the (`routes.php` for previous versions) or `web.php` file  and register your routing.
 
 Conclusion
 ==========
-I hope this package help someone around -_*
+Please feel free to report issues and open any PRs that you thinks will help to improve the package.
