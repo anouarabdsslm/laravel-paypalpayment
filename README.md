@@ -1,5 +1,5 @@
 
-## Note :
+#### Note :
 If you're going to use this package with Laravel 4, make sure to require the Laravel 4 branch: 
 ```js
 "require": {
@@ -57,7 +57,7 @@ Under `config/paypal_payment.php` configuration file set your paypal `client_id`
 
 Samples
 ============
-## Note: If you are not fan of using facade calls, you can resove the paypal payment service like so `app('paypalpayment')` then assign it to a property.
+#### Note: If you are not fan of using facade calls, you can resove the paypal payment service like so `app('paypalpayment')` then assign it to a property.
 
 ## 1-Using credit card as paypent method
 
