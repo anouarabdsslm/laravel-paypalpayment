@@ -13,7 +13,7 @@ laravel-paypalpayment
 laravel-paypalpayment is a simple package that helps you to process direct credit card payments, stored credit card payments and PayPal account payments with your Laravel 4/5 projects using PayPal REST API SDK.
 
 ## Donation :
-If you want to support us: <a href='https://pledgie.com/campaigns/24666'><img alt='Click here to lend your support to: github and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/24666.png?skin_name=chrome' border='0' ></a>
+donate a cup of :coffee: :blush: : <a href='https://pledgie.com/campaigns/24666'><img alt='Click here to lend your support to: github and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/24666.png?skin_name=chrome' border='0' ></a>
 
 ## <a href='https://youtu.be/q5Xb5r4MUB8'>Watch a Quick Demo</a>
 Installation
