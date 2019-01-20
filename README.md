@@ -1,5 +1,5 @@
 
-#### Note :Guys because of the heavy work I have I wont be able to maintain this package , so please try some others arround or fork it and modify it as you need.
+#### Note :Guys this package is deprecated,so please try some others or fork it and tweak it the way you want.
 #### Note :
 If you're going to use this package with Laravel 4, make sure to require the Laravel 4 branch: 
 ```js
