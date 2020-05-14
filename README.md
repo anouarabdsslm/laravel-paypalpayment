@@ -1,5 +1,6 @@
 
 #### Important :Guys this package is deprecated and Im no more maintaining it, try some others or just fork it and tweak it as you want. thanks.
+### Updated on 14/5/2020: I will update this package by the end of this week
 #### Note :
 If you're going to use this package with Laravel 4, make sure to require the Laravel 4 branch: 
 ```js
