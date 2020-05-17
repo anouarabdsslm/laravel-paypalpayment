@@ -1,6 +1,6 @@
 
-#### Important :Guys this package is deprecated and Im no more maintaining it, try some others or just fork it and tweak it as you want. thanks.
-### Updated on 14/5/2020: I will update this package by the end of this week
+#### Important :The use of the PayPal REST /payments APIs to accept credit card payments is restricted by paypal and they recomand to use Braintree Direct if you want to accept credit card payments. 
+### Update: I may re-create the package to use Braintree in future but with no deadline. You can also use the braintree/braintree_php library.
 #### Note :
 If you're going to use this package with Laravel 4, make sure to require the Laravel 4 branch: 
 ```js
