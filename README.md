@@ -65,9 +65,11 @@ Samples
 
 Create new controller `PaypalPaymentController`:
 ```php
-use Paypalpayment;
+
 class PaypalPaymentController extends BaseController {
 
+    use Paypalpayment;
+    
     /*
     * Process payment using credit card
     */
